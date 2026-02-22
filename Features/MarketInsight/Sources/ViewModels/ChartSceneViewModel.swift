@@ -18,31 +18,37 @@ public final class ChartSceneViewModel {
     private let service: ChartService
     private let priceService: PriceService
 
-    let walletId: WalletId
-    let assetModel: AssetViewModel
-    let priceAlertService: PriceAlertService
+    public let walletId: WalletId
+    public let assetModel: AssetViewModel
+    public let priceAlertService: PriceAlertService
 
     private let preferences: Preferences = .standard
 
-    var state: StateViewType<ChartValuesViewModel> = .loading
-    var currentPeriod: ChartPeriod {
-        didSet {
-            Task { await fetch() }
-        }
+    public var state: StateViewType<ChartValuesViewModel> = .loading
+    public var currentPeriod: ChartPeriod {
+        didSet { Task { await fetch() } }
     }
 
-    var priceData: PriceData?
-    var priceRequest: PriceRequest
+    public var priceData: PriceData?
+    public var priceRequest: PriceRequest
 
     public var isPresentingSetPriceAlert: Binding<AssetId?>
 
-    var title: String { assetModel.name }
-    var emptyTitle: String { Localized.Common.notAvailable }
-    var errorTitle: String { Localized.Errors.errorOccured }
-    
-    var priceAlertsViewModel: PriceAlertsViewModel { PriceAlertsViewModel(priceAlerts: priceData?.priceAlerts ?? []) }
-    var showPriceAlerts: Bool { priceAlertsViewModel.hasPriceAlerts && isPriceAvailable }
-    var isPriceAvailable: Bool { PriceViewModel(price: priceData?.price, currencyCode: preferences.currency).isPriceAvailable }
+    public var title: String { assetModel.name }
+    public var emptyTitle: String { Localized.Common.notAvailable }
+    public var errorTitle: String { Localized.Errors.errorOccured }
+
+    public var priceAlertsViewModel: PriceAlertsViewModel {
+        PriceAlertsViewModel(priceAlerts: priceData?.priceAlerts ?? [])
+    }
+
+    public var showPriceAlerts: Bool {
+        priceAlertsViewModel.hasPriceAlerts && isPriceAvailable
+    }
+
+    public var isPriceAvailable: Bool {
+        PriceViewModel(price: priceData?.price, currencyCode: preferences.currency).isPriceAvailable
+    }
 
     public init(
         service: ChartService = ChartService(),
@@ -62,13 +68,13 @@ public final class ChartSceneViewModel {
         self.priceRequest = PriceRequest(assetId: assetModel.asset.id)
         self.isPresentingSetPriceAlert = isPresentingSetPriceAlert
     }
-    
-    var priceDataModel: AssetDetailsInfoViewModel? {
+
+    public var priceDataModel: AssetDetailsInfoViewModel? {
         guard let priceData else { return nil }
         return AssetDetailsInfoViewModel(priceData: priceData)
     }
-    
-    func description(for error: Error) -> String {
+
+    public func description(for error: Error) -> String {
         if isNetworkError(error) {
             error.localizedDescription
         } else {
@@ -87,16 +93,25 @@ extension ChartSceneViewModel {
                 assetId: assetModel.asset.id,
                 period: currentPeriod
             )
+
             if let market = values.market {
-                try priceService.updateMarketPrice(assetId: assetModel.asset.id, market: market, currency: preferences.currency)
+                try priceService.updateMarketPrice(
+                    assetId: assetModel.asset.id,
+                    market: market,
+                    currency: preferences.currency
+                )
             }
+
             let price = try priceService.getPrice(for: assetModel.asset.id)
             let rate = try priceService.getRate(currency: preferences.currency)
-            
+
             var charts = values.prices.map {
-                ChartDateValue(date: Date(timeIntervalSince1970: TimeInterval($0.timestamp)), value: Double($0.value) * rate)
+                ChartDateValue(
+                    date: Date(timeIntervalSince1970: TimeInterval($0.timestamp)),
+                    value: Double($0.value) * rate
+                )
             }
-            
+
             if let price = price, let last = charts.last, price.updatedAt > last.date {
                 charts.append(ChartDateValue(date: .now, value: price.price))
             }

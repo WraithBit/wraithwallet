@@ -1,5 +1,5 @@
 "common.cancel" = "취소";
-"welcome.title" = "Welcome to Gem Family";
+"welcome.title" = "Welcome to Wraith";
 "common.done" = "Done";
 "wallet.create_new_wallet" = "새 지갑 만들기";
 "wallet.import_existing_wallet" = "기존 지갑 가져오기";
@@ -21,7 +21,7 @@
 "wallet.new.backup_warning" = "Write down your unique Secret Phrase and store it securely; it's essential for wallet access and recovery.";
 "common.continue" = "Continue";
 "common.secret_phrase" = "Secret Phrase";
-"application.name" = "Gem";
+"application.name" = "Wraith";
 "common.provider" = "Provider";
 "wallet.new.backup_confirm_warning" = "Confirm that you've written down and stored your Secret Phrase securely before proceeding, as it is crucial for future wallet access and recovery.";
 "common.loading" = "Loading";
@@ -212,10 +212,10 @@
 "common.private_key" = "Private Key";
 "nodes.import_node.latency" = "Latency";
 "common.latency_in_ms" = "%d ms";
-"stake.viagem" = "Stake via Gem Wallet";
+"stake.viagem" = "Stake via Wraith Wallet";
 "stake.no_active_staking" = "No active staking yet.";
 "errors.error" = "Error";
-"nodes.gem_wallet_node" = "Gem Wallet Node";
+"nodes.gem_wallet_node" = "Wraith Wallet Node";
 "errors.connections.user_cancelled" = "User cancelled";
 "errors.swap.no_quote_data" = "No quote data";
 "errors.not_supported" = "Not Supported";
@@ -280,7 +280,7 @@
 "info.network_fee.title" = "Network Fee";
 "info.watch_wallet.title" = "Watch Wallet";
 "info.watch_wallet.description" = "접근할 수는 없지만 거래 및 이동을 볼 수 있는 지갑입니다.";
-"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Gem Wallet. Network fees varies based on network usage.";
+"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Wraith Wallet. Network fees varies based on network usage.";
 "info.transaction.error.description" = "자금 부족, 잘못된 입력, 네트워크 거부 등의 오류로 인해 거래를 완료할 수 없습니다. 세부 정보를 확인하고 다시 시도해 주세요.";
 "info.transaction.pending.description" = "거래가 제출되었으며 네트워크에서 확인을 기다리고 있습니다. 처리 시간은 다를 수 있습니다. 업데이트된 내용을 다시 확인해 주세요.";
 "info.transaction.success.description" = "거래가 완료되었으며 네트워크에서 확인되었습니다. 세부 정보를 확인하여 거래 상태를 확인하실 수 있습니다.";
@@ -303,8 +303,8 @@
 "filter.types" = "유형";
 "fee_rate.gwei" = "%@ gwei";
 "swap.slippage" = "Slippage";
-"swap.quote_fee" = "Quote includes a %@ Gem fee.";
-"common.short_name" = "Gem";
+"swap.quote_fee" = "Quote includes a %@ Wraith fee.";
+"common.short_name" = "Wraith";
 "transfer.activate_asset.title" = "Activate Asset";
 "banner.activate_asset.description" = "%@ 자산을 사용하려면 먼저 네트워크의 특정 요구 사항을 충족하여 %@ 네트워크에서 해당 자산을 활성화해야 합니다.";
 "nft.properties" = "속성";
@@ -397,9 +397,9 @@
 "info.slippage.description" = "슬리피지란 거래의 예상 가격과 실제로 실행되는 가격의 차이를 말합니다.";
 "onboarding.accept_terms.title" = "약관 동의";
 "onboarding.accept_terms.message" = "계속 진행하기 전에 다음 약관을 읽고 동의해 주시기 바랍니다.";
-"onboarding.accept_terms.item1.message" = "저는 Gem이 아닌 제 지갑의 보안과 백업에 대한 전적인 책임을 진다는 것을 이해합니다.";
-"onboarding.accept_terms.item2.message" = "Gem은 은행이나 거래소가 아니며, 불법적인 목적으로 사용하는 것은 엄격히 금지되어 있다는 것을 알고 있습니다.";
-"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Gem is not liable and cannot help in any way.";
+"onboarding.accept_terms.item1.message" = "저는 Wraith이 아닌 제 지갑의 보안과 백업에 대한 전적인 책임을 진다는 것을 이해합니다.";
+"onboarding.accept_terms.item2.message" = "Wraith은 은행이나 거래소가 아니며, 불법적인 목적으로 사용하는 것은 엄격히 금지되어 있다는 것을 알고 있습니다.";
+"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Wraith is not liable and cannot help in any way.";
 "onboarding.accept_terms.continue" = "Agree and Continue";
 "errors.required" = "%@ 가 필요합니다";
 "asset.verification.unverified" = "검증되지 않음";
@@ -415,8 +415,8 @@
 "info.asset_status.suspicious.description" = "의심스럽거나 스팸 토큰은 잠재적 사기 또는 유해 자산으로 식별됩니다. 이러한 토큰은 에어드랍, 이체 또는 수동 가져오기를 통해 지갑에 나타날 수 있습니다.";
 "errors.insufficient_funds" = "자금이 부족합니다";
 "info.insufficient_network_fee_balance.title" = "%@ 이 필요합니다";
-"info.insufficient_network_fee_balance.description" = "이 거래에는 다음이 필요합니다. %@ 지불된 네트워크 수수료를 충당하기 위해 %@ 광부들이 아니라 Gem Wallet충분한 양을 확보하세요. %@.";
-"brand_name" = "Gem Wallet";
+"info.insufficient_network_fee_balance.description" = "이 거래에는 다음이 필요합니다. %@ 지불된 네트워크 수수료를 충당하기 위해 %@ 광부들이 아니라 Wraith Wallet충분한 양을 확보하세요. %@.";
+"brand_name" = "Wraith Wallet";
 "info.insufficient_balance.title" = "잔액이 부족합니다";
 "info.insufficient_balance.description" = "이 거래를 완료하기에 %@ 잔액이 부족합니다. 지갑에 충전, 수령 또는 스왑한 후 다시 시도해 주세요.";
 "info.account_minimum_balance.title" = "최소 잔액";
@@ -524,7 +524,7 @@
 "nft.report.reason.copyright" = "저작권";
 "nft.report.report_button_title" = "신고";
 "rewards.title" = "보상";
-"rewards.share_text" = "가입하다 Gem Wallet 제 추천 링크를 통해 가입하시고 보상을 받으세요: %@";
+"rewards.share_text" = "가입하다 Wraith Wallet 제 추천 링크를 통해 가입하시고 보상을 받으세요: %@";
 "rewards.my_referral_code" = "내 추천 코드";
 "rewards.invite_friends.title" = "친구 초대하기";
 "rewards.invite_friends.description" = "벌다 %@ 친구가 가입할 때마다 포인트를 획득합니다.";

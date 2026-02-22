@@ -1,5 +1,5 @@
 "common.cancel" = "取消";
-"welcome.title" = "欢迎成为Gem家人";
+"welcome.title" = "欢迎成为Wraith家人";
 "common.done" = "完成";
 "wallet.create_new_wallet" = "创建新的钱包";
 "wallet.import_existing_wallet" = "导入现有钱包";
@@ -21,7 +21,7 @@
 "wallet.new.backup_warning" = "请写下并安全保存独一无二的[%key_id：317595596%]；这一步对恢复钱包至关重要。";
 "common.continue" = "继续";
 "common.secret_phrase" = "助记词";
-"application.name" = "Gem";
+"application.name" = "Wraith";
 "common.provider" = "服务商";
 "wallet.new.backup_confirm_warning" = "继续之前，请确认已写下并安全保存 [%key_id：317595596%]，这一步对恢复钱包非常重要。";
 "common.loading" = "加载中";
@@ -212,10 +212,10 @@
 "common.private_key" = "私钥";
 "nodes.import_node.latency" = "延迟";
 "common.latency_in_ms" = "%d 毫秒";
-"stake.viagem" = "Stake via Gem Wallet";
+"stake.viagem" = "Stake via Wraith Wallet";
 "stake.no_active_staking" = "当前没有激活的质押";
 "errors.error" = "错误";
-"nodes.gem_wallet_node" = "Gem 钱包节点";
+"nodes.gem_wallet_node" = "Wraith 钱包节点";
 "errors.connections.user_cancelled" = "用户已取消";
 "errors.swap.no_quote_data" = "暂无报价数据";
 "errors.not_supported" = "不支持";
@@ -280,7 +280,7 @@
 "info.network_fee.title" = "网络费用";
 "info.watch_wallet.title" = "观察钱包";
 "info.watch_wallet.description" = "这是一个您无法操作的钱包，但可以查看它的交易和资产变动。";
-"info.network_fee.description" = "在 %@ 网络上的每笔交易都需要以 %@ 支付给矿工的手续费，以处理您的交易，Gem Wallet 不收取此费用。网络手续费根据网络使用情况而变化。";
+"info.network_fee.description" = "在 %@ 网络上的每笔交易都需要以 %@ 支付给矿工的手续费，以处理您的交易，Wraith Wallet 不收取此费用。网络手续费根据网络使用情况而变化。";
 "info.transaction.error.description" = "由于资金不足、输入无效或网络拒绝等错误，交易无法完成。请检查详情并重试。";
 "info.transaction.pending.description" = "交易已提交，正在等待网络确认。处理时间可能有所不同。请稍后查看更新。";
 "info.transaction.success.description" = "交易已完成并已在网络上确认。可查看详情以核实状态。";
@@ -303,8 +303,8 @@
 "filter.types" = "类型";
 "fee_rate.gwei" = "%@ gwei";
 "swap.slippage" = "滑点";
-"swap.quote_fee" = "报价包括 %@ Gem 交易费用。";
-"common.short_name" = "Gem";
+"swap.quote_fee" = "报价包括 %@ Wraith 交易费用。";
+"common.short_name" = "Wraith";
 "transfer.activate_asset.title" = "启用资产";
 "banner.activate_asset.description" = "要使用 %@ 资产，必须先在 %@ 网络上启用它，并满足该网络的特定要求。";
 "nft.properties" = "特性";
@@ -397,9 +397,9 @@
 "info.slippage.description" = "滑点是指交易预期价格与实际执行价格之间的差异。";
 "onboarding.accept_terms.title" = "接受条款";
 "onboarding.accept_terms.message" = "请阅读并同意以下条款后继续。";
-"onboarding.accept_terms.item1.message" = "我明白钱包的安全备份由我自行负责，Gem 不承担任何责任。";
+"onboarding.accept_terms.item1.message" = "我明白钱包的安全备份由我自行负责，Wraith 不承担任何责任。";
 "onboarding.accept_terms.item2.message" = "我明白 Gem 不是银行或交易所，严禁将其用于非法用途。";
-"onboarding.accept_terms.item3.message" = "我明白如果丢失钱包访问权限，Gem 不承担任何责任，也无法提供帮助。";
+"onboarding.accept_terms.item3.message" = "我明白如果丢失钱包访问权限，Wraith 不承担任何责任，也无法提供帮助。";
 "onboarding.accept_terms.continue" = "我已了解，继续";
 "errors.required" = "%@为必填项";
 "asset.verification.unverified" = "未验证";
@@ -415,8 +415,8 @@
 "info.asset_status.suspicious.description" = "可疑或垃圾代币会被识别为潜在的诈骗或有害资产。它们可能因空投、转账或手动导入而出现在您的钱包中。";
 "errors.insufficient_funds" = "资金不足";
 "info.insufficient_network_fee_balance.title" = "需要%@";
-"info.insufficient_network_fee_balance.description" = "此交易需要 %@ 用于支付网络费用 %@ 矿工，而不是 Gem Wallet确保你有足够的 %@。";
-"brand_name" = "Gem Wallet";
+"info.insufficient_network_fee_balance.description" = "此交易需要 %@ 用于支付网络费用 %@ 矿工，而不是 Wraith Wallet确保你有足够的 %@。";
+"brand_name" = "Wraith Wallet";
 "info.insufficient_balance.title" = "余额不足";
 "info.insufficient_balance.description" = "您的余额不足%@ ，无法完成此交易。请充值、接收或兑换您的钱包，然后重试。";
 "info.account_minimum_balance.title" = "最低余额";
@@ -524,7 +524,7 @@
 "nft.report.reason.copyright" = "版权";
 "nft.report.report_button_title" = "举报";
 "rewards.title" = "奖励";
-"rewards.share_text" = "加入 Gem Wallet 使用我的推荐链接，即可获得奖励： %@";
+"rewards.share_text" = "加入 Wraith Wallet 使用我的推荐链接，即可获得奖励： %@";
 "rewards.my_referral_code" = "我的推荐码";
 "rewards.invite_friends.title" = "邀请好友";
 "rewards.invite_friends.description" = "赚 %@ 每邀请一位好友加入，即可获得积分。";

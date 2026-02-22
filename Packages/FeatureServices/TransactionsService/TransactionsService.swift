@@ -37,7 +37,6 @@ public final class TransactionsService: Sendable {
             throw AnyError("Can't get a wallet, walletId: \(walletId.id)")
         }
         let store = WalletPreferences(walletId: walletId)
-        let newTimestamp = Int(Date.now.timeIntervalSince1970)
 
         let deviceId = try await deviceService.getSubscriptionsDeviceId()
         let response = try await provider.getTransactionsAll(
@@ -46,16 +45,27 @@ public final class TransactionsService: Sendable {
             fromTimestamp: store.transactionsTimestamp
         )
 
+        if response.transactions.isEmpty {
+            return
+        }
+
         try await prefetchAssets(walletId: walletId, transactions: response.transactions)
         try transactionStore.addTransactions(walletId: walletId, transactions: response.transactions)
         try addressStore.addAddressNames(response.addressNames)
 
-        store.transactionsTimestamp = newTimestamp
+        // Use the latest transaction's server-side createdAt instead of wall clock
+        // This prevents the timestamp from advancing past unfetched transactions
+        let maxCreatedAt = response.transactions
+            .map { Int($0.createdAt.timeIntervalSince1970) }
+            .max()
+
+        if let maxCreatedAt {
+            store.transactionsTimestamp = maxCreatedAt
+        }
     }
 
     public func updateForAsset(wallet: Wallet, assetId: AssetId) async throws {
         let store = WalletPreferences(walletId: wallet.walletId)
-        let newTimestamp = Int(Date.now.timeIntervalSince1970)
         let deviceId = try await deviceService.getSubscriptionsDeviceId()
         let response = try await provider.getTransactionsForAsset(
             deviceId: deviceId,
@@ -71,7 +81,14 @@ public final class TransactionsService: Sendable {
         try transactionStore.addTransactions(walletId: wallet.walletId, transactions: response.transactions)
         try addressStore.addAddressNames(response.addressNames)
 
-        store.setTransactionsForAssetTimestamp(assetId: assetId.identifier, value: newTimestamp)
+        // Use the latest transaction's server-side createdAt instead of wall clock
+        let maxCreatedAt = response.transactions
+            .map { Int($0.createdAt.timeIntervalSince1970) }
+            .max()
+
+        if let maxCreatedAt {
+            store.setTransactionsForAssetTimestamp(assetId: assetId.identifier, value: maxCreatedAt)
+        }
     }
 
     public func addTransaction(walletId: WalletId, transaction: Transaction) throws {

@@ -11,7 +11,7 @@ import Foundation
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 public enum Localized {
   /// Gem Wallet
-  public static let brandName = Localized.tr("Localizable", "brand_name", fallback: "Gem Wallet")
+  public static let brandName = Localized.tr("Localizable", "brand_name", fallback: "Wraith Wallet")
   public enum Activity {
     /// Activity
     public static let title = Localized.tr("Localizable", "activity.title", fallback: "Activity")
@@ -30,7 +30,7 @@ public enum Localized {
   }
   public enum Application {
     /// Gem
-    public static let name = Localized.tr("Localizable", "application.name", fallback: "Gem")
+    public static let name = Localized.tr("Localizable", "application.name", fallback: "Wraith")
   }
   public enum Asset {
     /// Add to wallet
@@ -320,7 +320,7 @@ public enum Localized {
     /// Share
     public static let share = Localized.tr("Localizable", "common.share", fallback: "Share")
     /// Gem
-    public static let shortName = Localized.tr("Localizable", "common.short_name", fallback: "Gem")
+    public static let shortName = Localized.tr("Localizable", "common.short_name", fallback: "Wraith")
     /// Show %@
     public static func show(_ p1: Any) -> String {
       return Localized.tr("Localizable", "common.show", String(describing: p1), fallback: "Show %@")
@@ -566,7 +566,7 @@ public enum Localized {
     public enum InsufficientNetworkFeeBalance {
       /// This transaction requires %@ to cover the network fee paid to %@ miners, not Gem Wallet. Ensure you have enough %@.
       public static func description(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
-        return Localized.tr("Localizable", "info.insufficient_network_fee_balance.description", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "This transaction requires %@ to cover the network fee paid to %@ miners, not Gem Wallet. Ensure you have enough %@.")
+        return Localized.tr("Localizable", "info.insufficient_network_fee_balance.description", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "This transaction requires %@ to cover the network fee paid to %@ miners, not Wraith Wallet. Ensure you have enough %@.")
       }
       /// %@ required
       public static func title(_ p1: Any) -> String {
@@ -586,7 +586,7 @@ public enum Localized {
     public enum NetworkFee {
       /// Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Gem Wallet. Network fees varies based on network usage.
       public static func description(_ p1: Any, _ p2: Any) -> String {
-        return Localized.tr("Localizable", "info.network_fee.description", String(describing: p1), String(describing: p2), fallback: "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Gem Wallet. Network fees varies based on network usage.")
+        return Localized.tr("Localizable", "info.network_fee.description", String(describing: p1), String(describing: p2), fallback: "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Wraith Wallet. Network fees varies based on network usage.")
       }
       /// Network Fee
       public static let title = Localized.tr("Localizable", "info.network_fee.title", fallback: "Network Fee")
@@ -748,7 +748,7 @@ public enum Localized {
   }
   public enum Nodes {
     /// Gem Wallet Node
-    public static let gemWalletNode = Localized.tr("Localizable", "nodes.gem_wallet_node", fallback: "Gem Wallet Node")
+    public static let gemWalletNode = Localized.tr("Localizable", "nodes.gem_wallet_node", fallback: "Wraith Wallet Node")
     public enum ImportNode {
       /// Chain ID
       public static let chainId = Localized.tr("Localizable", "nodes.import_node.chain_id", fallback: "Chain ID")
@@ -772,15 +772,15 @@ public enum Localized {
       public static let title = Localized.tr("Localizable", "onboarding.accept_terms.title", fallback: "Accept Terms")
       public enum Item1 {
         /// I understand that I am solely responsible for the security and backup of my wallets, not Gem.
-        public static let message = Localized.tr("Localizable", "onboarding.accept_terms.item1.message", fallback: "I understand that I am solely responsible for the security and backup of my wallets, not Gem.")
+        public static let message = Localized.tr("Localizable", "onboarding.accept_terms.item1.message", fallback: "I understand that I am solely responsible for the security and backup of my wallets, not Wraith.")
       }
       public enum Item2 {
         /// I understand that Gem is not a bank or exchange, and using it for illegal purposes is strictly prohibited.
-        public static let message = Localized.tr("Localizable", "onboarding.accept_terms.item2.message", fallback: "I understand that Gem is not a bank or exchange, and using it for illegal purposes is strictly prohibited.")
+        public static let message = Localized.tr("Localizable", "onboarding.accept_terms.item2.message", fallback: "I understand that Wraith is not a bank or exchange, and using it for illegal purposes is strictly prohibited.")
       }
       public enum Item3 {
         /// I understand that if I ever lose access to my wallets, Gem is not liable and cannot help in any way.
-        public static let message = Localized.tr("Localizable", "onboarding.accept_terms.item3.message", fallback: "I understand that if I ever lose access to my wallets, Gem is not liable and cannot help in any way.")
+        public static let message = Localized.tr("Localizable", "onboarding.accept_terms.item3.message", fallback: "I understand that if I ever lose access to my wallets, Wraith is not liable and cannot help in any way.")
       }
     }
     public enum Security {
@@ -989,7 +989,7 @@ public enum Localized {
     public static let referrals = Localized.tr("Localizable", "rewards.referrals", fallback: "Referrals")
     /// Join Gem Wallet with my referral link and earn rewards: %@
     public static func shareText(_ p1: Any) -> String {
-      return Localized.tr("Localizable", "rewards.share_text", String(describing: p1), fallback: "Join Gem Wallet with my referral link and earn rewards: %@")
+      return Localized.tr("Localizable", "rewards.share_text", String(describing: p1), fallback: "Join Wraith Wallet with my referral link and earn rewards: %@")
     }
     /// Rewards
     public static let title = Localized.tr("Localizable", "rewards.title", fallback: "Rewards")
@@ -1245,7 +1245,7 @@ public enum Localized {
     /// Validators
     public static let validators = Localized.tr("Localizable", "stake.validators", fallback: "Validators")
     /// Stake via Gem Wallet
-    public static let viagem = Localized.tr("Localizable", "stake.viagem", fallback: "Stake via Gem Wallet")
+    public static let viagem = Localized.tr("Localizable", "stake.viagem", fallback: "Stake via Wraith Wallet")
     public enum Resource {
       /// Bandwidth
       public static let bandwidth = Localized.tr("Localizable", "stake.resource.bandwidth", fallback: "Bandwidth")
@@ -1278,7 +1278,7 @@ public enum Localized {
     public static let priceImpact = Localized.tr("Localizable", "swap.price_impact", fallback: "Price Impact")
     /// Quote includes a %@ Gem fee.
     public static func quoteFee(_ p1: Any) -> String {
-      return Localized.tr("Localizable", "swap.quote_fee", String(describing: p1), fallback: "Quote includes a %@ Gem fee.")
+      return Localized.tr("Localizable", "swap.quote_fee", String(describing: p1), fallback: "Quote includes a %@ Wraith fee.")
     }
     /// Slippage
     public static let slippage = Localized.tr("Localizable", "swap.slippage", fallback: "Slippage")
@@ -1613,7 +1613,7 @@ public enum Localized {
   }
   public enum Welcome {
     /// Welcome to Gem Family
-    public static let title = Localized.tr("Localizable", "welcome.title", fallback: "Welcome to Gem Family")
+    public static let title = Localized.tr("Localizable", "welcome.title", fallback: "Welcome to Wraith")
   }
   public enum Widget {
     public enum Medium {

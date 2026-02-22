@@ -21,6 +21,7 @@ public struct FiatScene: View {
             )
             .padding(.top, .medium)
             .listGroupRowStyle()
+
             amountSelectorSection
             providerSection
         }
@@ -70,7 +71,13 @@ extension FiatScene {
                             model.onSelectRandomAmount()
                         }
                         .font(.subheadline.weight(.semibold))
-                        .buttonStyle(.listEmpty())
+                        .buttonStyle(.plain)
+                        .padding(.horizontal, .medium)
+                        .padding(.vertical, .small)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .strokeBorder(Color.secondary.opacity(0.25), lineWidth: 1)
+                        )
                         .overlay {
                             RandomOverlayView()
                         }
@@ -87,9 +94,11 @@ extension FiatScene {
             switch model.quotesState {
             case .noData:
                 StateEmptyView(title: model.emptyTitle)
+
             case .loading:
                 ListItemLoadingView()
                     .id(UUID())
+
             case .data:
                 if let quote = model.selectedQuote {
                     let view = ListItemImageView(
@@ -97,6 +106,7 @@ extension FiatScene {
                         subtitle: quote.provider.name,
                         assetImage: model.providerAssetImage(quote.provider)
                     )
+
                     if model.allowSelectProvider {
                         NavigationCustomLink(
                             with: view,
@@ -105,12 +115,20 @@ extension FiatScene {
                     } else {
                         view
                     }
-                    ListItemView(title: model.rateTitle, subtitle: model.rateValue)
+
+                    ListItemView(
+                        title: model.rateTitle,
+                        subtitle: model.rateValue
+                    )
                 } else {
                     EmptyView()
                 }
+
             case .error(let error):
-                ListItemErrorView(errorTitle: model.errorTitle, error: error)
+                ListItemErrorView(
+                    errorTitle: model.errorTitle,
+                    error: error
+                )
             }
         }
     }

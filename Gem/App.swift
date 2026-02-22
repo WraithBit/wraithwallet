@@ -12,17 +12,20 @@ import Preferences
 import AssetsService
 import WalletService
 import AppService
+import FirebaseCore
+import FirebaseAnalytics
+import PrimitivesComponents
 
 @main
 struct GemApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
+
     private let resolver: AppResolver = .main
-    
+
     init() {
         UNUserNotificationCenter.current().delegate = appDelegate
     }
-    
+
     var body: some Scene {
         WindowGroup {
             RootScene(
@@ -52,18 +55,32 @@ struct GemApp: App {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate, UIWindowSceneDelegate {
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+
+        // Firebase initialisation
+        FirebaseApp.configure()
+        
+        // Track app session start
+        AnalyticsService.shared.trackSessionStart()
+
+        #if DEBUG
+        print("✅ Firebase configured successfully")
+        #endif
+
         AppResolver.main.services.onstartService.configure()
         Task {
             await AppResolver.main.services.onstartAsyncService.run()
         }
         return true
     }
-    
+
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        
+
         Task {
             let _ = try SecurePreferences.standard.set(value: token, key: .deviceToken)
             try await AppResolver.main.services.deviceService.update()
@@ -78,15 +95,15 @@ class AppDelegate: NSObject, UIApplicationDelegate, UIWindowSceneDelegate {
         Task { await AppResolver.main.services.navigationHandler.handlePush(userInfo) }
     }
 
-    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         debugLog("url \(url)")
         return true
     }
-    
+
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         //debugLog("URLContexts.first?.url \(URLContexts.first?.url)")
     }
-    
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         //debugLog("URLContexts.first?.url \(connectionOptions.urlContexts.first?.url)")
     }
@@ -100,10 +117,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, UIWindowSceneDelegate {
 }
 
 extension AppDelegate: @preconcurrency UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
         completionHandler([.badge, .banner, .list, .sound])
     }
-    
+
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,

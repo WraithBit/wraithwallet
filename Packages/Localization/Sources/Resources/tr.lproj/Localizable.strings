@@ -1,5 +1,5 @@
 "common.cancel" = "İptal etmek";
-"welcome.title" = "Gem Ailesine Hoş Geldiniz";
+"welcome.title" = "Wraith Ailesine Hoş Geldiniz";
 "common.done" = "Tamamlamak";
 "wallet.create_new_wallet" = "Yeni Cüzdan Oluştur";
 "wallet.import_existing_wallet" = "Mevcut Bir Cüzdanı İçe Aktarma";
@@ -21,7 +21,7 @@
 "wallet.new.backup_warning" = "Benzersiz Geçersiz Gizli İfade anahtarınızı bir yere yazın ve güvenli bir şekilde saklayın; cüzdan erişimi ve kurtarılması için önemlidir.";
 "common.continue" = "Devam etmek";
 "common.secret_phrase" = "Geçersiz Gizli İfade";
-"application.name" = "Gem";
+"application.name" = "Wraith";
 "common.provider" = "Sağlayıcı";
 "wallet.new.backup_confirm_warning" = "Devam etmeden önce cüzdan bilgilerinizi not ettiğinizi ve güvenli bir şekilde sakladığınızdan emin olun; çünkü bu, cüzdanınıza gelecekteki erişim ve kurtarma işlemleri için çok önemlidir.";
 "common.loading" = "Yükleniyor";
@@ -212,10 +212,10 @@
 "common.private_key" = "Özel Anahtar";
 "nodes.import_node.latency" = "Gecikme";
 "common.latency_in_ms" = "%d ms";
-"stake.viagem" = "Stake via Gem Wallet";
+"stake.viagem" = "Stake via Wraith Wallet";
 "stake.no_active_staking" = "Henüz aktif staking yok.";
 "errors.error" = "Hata";
-"nodes.gem_wallet_node" = "Gem Cüzdan Düğümü";
+"nodes.gem_wallet_node" = "Wraith Cüzdan Düğümü";
 "errors.connections.user_cancelled" = "Kullanıcı iptal etti";
 "errors.swap.no_quote_data" = "Teklif verisi yok";
 "errors.not_supported" = "Desteklenmiyor";
@@ -280,7 +280,7 @@
 "info.network_fee.title" = "Ağ";
 "info.watch_wallet.title" = "Watch Wallet";
 "info.watch_wallet.description" = "Erişiminizin olmadığı, ancak işlemlerini ve hareketlerini izleyebileceğiniz bir cüzdan.";
-"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Gem Wallet. Network fees varies based on network usage.";
+"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Wraith Wallet. Network fees varies based on network usage.";
 "info.transaction.error.description" = "İşlem, yetersiz fon, geçersiz giriş veya ağ tarafından reddedilme gibi bir hata nedeniyle tamamlanamadı. Lütfen ayrıntıları inceleyin ve tekrar deneyin.";
 "info.transaction.pending.description" = "İşlem gönderildi ve ağda onay bekleniyor. İşlem süreleri değişiklik gösterebilir. Lütfen güncellemeler için tekrar kontrol edin.";
 "info.transaction.success.description" = "İşlem tamamlandı ve ağda onaylandı. Durumunu doğrulamak için ayrıntıları inceleyebilirsiniz.";
@@ -303,8 +303,8 @@
 "filter.types" = "Türler";
 "fee_rate.gwei" = "%@ gwei";
 "swap.slippage" = "Slippage";
-"swap.quote_fee" = "Quote includes a %@ Gem fee.";
-"common.short_name" = "Gem";
+"swap.quote_fee" = "Quote includes a %@ Wraith fee.";
+"common.short_name" = "Wraith";
 "transfer.activate_asset.title" = "Activate Asset";
 "banner.activate_asset.description" = "%@ varlığını kullanmak için, öncelikle ağın özel gereksinimlerini karşılayarak %@ ağında etkinleştirmeniz gerekir.";
 "nft.properties" = "Özellikler";
@@ -397,9 +397,9 @@
 "info.slippage.description" = "Kayma, bir işlemin beklenen fiyatı ile gerçekleştirildiği gerçek fiyat arasındaki farkı ifade eder.";
 "onboarding.accept_terms.title" = "Şartları Kabul Et";
 "onboarding.accept_terms.message" = "Devam etmeden önce lütfen aşağıdaki şartları okuyun ve kabul edin.";
-"onboarding.accept_terms.item1.message" = "Cüzdanlarımın güvenliğinden ve yedeklemesinden yalnızca benim sorumlu olduğumu, Gem'in sorumlu olmadığını anlıyorum.";
-"onboarding.accept_terms.item2.message" = "Gem'in bir banka veya borsa olmadığını ve yasa dışı amaçlarla kullanılmasının kesinlikle yasak olduğunu anlıyorum.";
-"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Gem is not liable and cannot help in any way.";
+"onboarding.accept_terms.item1.message" = "Cüzdanlarımın güvenliğinden ve yedeklemesinden yalnızca benim sorumlu olduğumu, Wraith'in sorumlu olmadığını anlıyorum.";
+"onboarding.accept_terms.item2.message" = "Wraith'in bir banka veya borsa olmadığını ve yasa dışı amaçlarla kullanılmasının kesinlikle yasak olduğunu anlıyorum.";
+"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Wraith is not liable and cannot help in any way.";
 "onboarding.accept_terms.continue" = "Agree and Continue";
 "errors.required" = "%@ gereklidir";
 "asset.verification.unverified" = "Doğrulanmamış";
@@ -415,8 +415,8 @@
 "info.asset_status.suspicious.description" = "Şüpheli veya spam token'lar potansiyel dolandırıcılık veya zararlı varlıklar olarak tanımlanır. Airdrop'lar, transferler veya manuel ithalatlar nedeniyle cüzdanınızda görünebilirler.";
 "errors.insufficient_funds" = "Yetersiz fon";
 "info.insufficient_network_fee_balance.title" = "%@ gerekli";
-"info.insufficient_network_fee_balance.description" = "Bu işlem gerektirir %@ ödenen ağ ücretini karşılamak için %@ madenciler, değil Gem WalletYeterli miktarda olduğundan emin olun. %@.";
-"brand_name" = "Gem Wallet";
+"info.insufficient_network_fee_balance.description" = "Bu işlem gerektirir %@ ödenen ağ ücretini karşılamak için %@ madenciler, değil Wraith WalletYeterli miktarda olduğundan emin olun. %@.";
+"brand_name" = "Wraith Wallet";
 "info.insufficient_balance.title" = "Yetersiz Bakiye";
 "info.insufficient_balance.description" = "Bu işlemi tamamlamak için yeterli %@ iniz yok. Lütfen cüzdanınıza para yükleyin, alın veya takas edin ve tekrar deneyin.";
 "info.account_minimum_balance.title" = "Minimum bakiye";
@@ -524,7 +524,7 @@
 "nft.report.reason.copyright" = "Telif hakkı";
 "nft.report.report_button_title" = "Bildir";
 "rewards.title" = "Ödüller";
-"rewards.share_text" = "Katılmak Gem Wallet Benim referans linkimi kullanarak kayıt olun ve ödüller kazanın: %@";
+"rewards.share_text" = "Katılmak Wraith Wallet Benim referans linkimi kullanarak kayıt olun ve ödüller kazanın: %@";
 "rewards.my_referral_code" = "Benim referans kodum";
 "rewards.invite_friends.title" = "Arkadaşlarınızı Davet Edin";
 "rewards.invite_friends.description" = "Para kazanmak %@ Katılan her arkadaş için puan kazanacaksınız.";

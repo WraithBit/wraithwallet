@@ -6,19 +6,19 @@
 	<string>production</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:gemwallet.com</string>
+		<string>applinks:wraithwallet.io</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.gemwallet.ios</string>
+		<string>group.com.wraith.wallet</string>
 	</array>
 	<key>com.apple.security.files.user-selected.read-only</key>
 	<true/>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.gemwallet.ios</string>
+		<string>$(AppIdentifierPrefix)com.wraith.wallet</string>
 	</array>
 </dict>
 </plist>

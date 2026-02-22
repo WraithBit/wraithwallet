@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C30952AF299C39D70004C0F9"
-               BuildableName = "Gem.app"
-               BlueprintName = "Gem"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               BuildableName = "Wraith.app"
+               BlueprintName = "Wraith"
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "C30952C0299C39D80004C0F9"
                BuildableName = "GemTests.xctest"
                BlueprintName = "GemTests"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -56,7 +56,7 @@
                BlueprintIdentifier = "D8A1F8722B17F21E00B15F54"
                BuildableName = "Screenshots.xctest"
                BlueprintName = "Screenshots"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -67,7 +67,7 @@
                BlueprintIdentifier = "D83096AB2D5D4F1E00FFEE3E"
                BuildableName = "GemUITests.xctest"
                BlueprintName = "GemUITests"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -428,11 +428,17 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C30952AF299C39D70004C0F9"
-            BuildableName = "Gem.app"
-            BlueprintName = "Gem"
-            ReferencedContainer = "container:Gem.xcodeproj">
+            BuildableName = "Wraith.app"
+            BlueprintName = "Wraith"
+            ReferencedContainer = "container:Wraith.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-FIRDebugEnabled "
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "DB_LOG_ENABLED"
@@ -452,9 +458,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C30952AF299C39D70004C0F9"
-            BuildableName = "Gem.app"
-            BlueprintName = "Gem"
-            ReferencedContainer = "container:Gem.xcodeproj">
+            BuildableName = "Wraith.app"
+            BlueprintName = "Wraith"
+            ReferencedContainer = "container:Wraith.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

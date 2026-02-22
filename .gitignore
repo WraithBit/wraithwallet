@@ -1,54 +1,46 @@
-# Xcode
-*.xcworkspace/
-*.xcworkspace/xcuserdata/
-*.xcworkspace/contents.xcworkspacedata
-*.xcodeproj/project.xcworkspace/xcuserdata/
-*.xcodeproj/xcuserdata/
-xcuserdata/
-DerivedData/
-build/
-.build/
-.xcframework/
-
-# Swift Package Manager
-.swiftpm/
-.build/
-**/.swiftpm/**/package.xcworkspace/contents.xcworkspacedata
-.swiftpm/config/registries.json
-
-# General macOS files
+# macOS
 .DS_Store
-.AppleDouble
-.LSOverride
 
-# General backup and temporary files
-*~
-*.swp
-*.swo
-*.orig
-*.temp
-*.tmp
-*.bak
+# Xcode
+DerivedData/
+*.xcuserstate
+*.xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+*.moved-aside
 
-# VSCode settings
-.vscode/
-.vscode/settings.json
+# SwiftPM / build
+.build/
+.swiftpm/
+Package.resolved
 
-# Claude Code settings
-.claude/settings.local.json
+# Build products
+build/
+*.ipa
+*.dSYM.zip
+*.dSYM
 
-# Dependency Management
-Packages/Gemstone/
+# CocoaPods / Carthage
+Pods/
+Carthage/Build/
 
-# Compressed files
-*.tar.bz2
+# Secrets
+Secrets.plist
+GoogleService-Info.plist
+*.p12
+*.mobileprovision
+*.cer
+*.key
+.env
+.env.*
+*.env
 
-# PlantUML files
-sources.txt
-sources.png
+# Logs / DBs
+*.log
+*.sqlite
+*.sqlite3
 
-# Git-specific
-*.orig
-
-# rust
-target/
+# Xcode user data (do not commit)
+xcuserdata/
+*.xcuserdatad/
+*.xcbkptlist

@@ -1,5 +1,5 @@
 "common.cancel" = "Anulować";
-"welcome.title" = "Welcome to Gem Family";
+"welcome.title" = "Welcome to Wraith";
 "common.done" = "Done";
 "wallet.create_new_wallet" = "Utwórz nowy portfel";
 "wallet.import_existing_wallet" = "Zaimportuj istniejący portfel";
@@ -21,7 +21,7 @@
 "wallet.new.backup_warning" = "Write down your unique Secret Phrase and store it securely; it's essential for wallet access and recovery.";
 "common.continue" = "Continue";
 "common.secret_phrase" = "Secret Phrase";
-"application.name" = "Gem";
+"application.name" = "Wraith";
 "common.provider" = "Provider";
 "wallet.new.backup_confirm_warning" = "Confirm that you've written down and stored your Secret Phrase securely before proceeding, as it is crucial for future wallet access and recovery.";
 "common.loading" = "Loading";
@@ -212,10 +212,10 @@
 "common.private_key" = "Private Key";
 "nodes.import_node.latency" = "Latency";
 "common.latency_in_ms" = "%d ms";
-"stake.viagem" = "Stake via Gem Wallet";
+"stake.viagem" = "Stake via Wraith Wallet";
 "stake.no_active_staking" = "No active staking yet.";
 "errors.error" = "Error";
-"nodes.gem_wallet_node" = "Gem Wallet Node";
+"nodes.gem_wallet_node" = "Wraith Wallet Node";
 "errors.connections.user_cancelled" = "User cancelled";
 "errors.swap.no_quote_data" = "No quote data";
 "errors.not_supported" = "Not Supported";
@@ -280,7 +280,7 @@
 "info.network_fee.title" = "Network Fee";
 "info.watch_wallet.title" = "Watch Wallet";
 "info.watch_wallet.description" = "Portfel, do którego nie masz dostępu, ale możesz śledzić zawarte w nim transakcje i ruchy.";
-"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Gem Wallet. Network fees varies based on network usage.";
+"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Wraith Wallet. Network fees varies based on network usage.";
 "info.transaction.error.description" = "Transakcja nie mogła zostać ukończona z powodu błędu, takiego jak niewystarczające środki, nieprawidłowe dane wejściowe lub odrzucenie przez sieć. Sprawdź szczegóły i spróbuj ponownie.";
 "info.transaction.pending.description" = "Transakcja została wysłana i oczekuje na potwierdzenie w sieci. Czasy przetwarzania mogą się różnić. Sprawdź ponownie, czy są jakieś aktualizacje.";
 "info.transaction.success.description" = "Transakcja została ukończona i potwierdzona w sieci. Możesz przejrzeć szczegóły, aby zweryfikować jej status.";
@@ -303,8 +303,8 @@
 "filter.types" = "Typy";
 "fee_rate.gwei" = "%@ gwei";
 "swap.slippage" = "Slippage";
-"swap.quote_fee" = "Quote includes a %@ Gem fee.";
-"common.short_name" = "Gem";
+"swap.quote_fee" = "Quote includes a %@ Wraith fee.";
+"common.short_name" = "Wraith";
 "transfer.activate_asset.title" = "Activate Asset";
 "banner.activate_asset.description" = "Aby użyć zasobu %@, należy najpierw włączyć go w sieci %@ spełniając określone wymagania sieciowe.";
 "nft.properties" = "Właściwości";
@@ -397,9 +397,9 @@
 "info.slippage.description" = "Poślizg odnosi się do różnicy między oczekiwaną ceną transakcji a rzeczywistą ceną, po której została ona zrealizowana.";
 "onboarding.accept_terms.title" = "Akceptuję warunki";
 "onboarding.accept_terms.message" = "Przed kontynuowaniem przeczytaj i zaakceptuj poniższe warunki.";
-"onboarding.accept_terms.item1.message" = "Rozumiem, że za bezpieczeństwo i kopie zapasowe moich portfeli odpowiadam wyłącznie ja, a nie Gem.";
-"onboarding.accept_terms.item2.message" = "Rozumiem, że Gem nie jest bankiem ani giełdą i używanie go w celach niezgodnych z prawem jest surowo zabronione.";
-"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Gem is not liable and cannot help in any way.";
+"onboarding.accept_terms.item1.message" = "Rozumiem, że za bezpieczeństwo i kopie zapasowe moich portfeli odpowiadam wyłącznie ja, a nie Wraith.";
+"onboarding.accept_terms.item2.message" = "Rozumiem, że Wraith nie jest bankiem ani giełdą i używanie go w celach niezgodnych z prawem jest surowo zabronione.";
+"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Wraith is not liable and cannot help in any way.";
 "onboarding.accept_terms.continue" = "Agree and Continue";
 "errors.required" = "%@ jest wymagane";
 "asset.verification.unverified" = "Niesprawdzony";
@@ -415,8 +415,8 @@
 "info.asset_status.suspicious.description" = "Podejrzane lub spamowe tokeny są identyfikowane jako potencjalne oszustwa lub szkodliwe aktywa. Mogą pojawić się w Twoim portfelu z powodu airdropów, transferów lub ręcznych importów.";
 "errors.insufficient_funds" = "Niewystarczające fundusze";
 "info.insufficient_network_fee_balance.title" = "%@ wymagane";
-"info.insufficient_network_fee_balance.description" = "Ta transakcja wymaga %@ aby pokryć opłatę sieciową uiszczaną %@ górnicy, nie Gem Wallet. Upewnij się, że masz wystarczająco dużo %@.";
-"brand_name" = "Gem Wallet";
+"info.insufficient_network_fee_balance.description" = "Ta transakcja wymaga %@ aby pokryć opłatę sieciową uiszczaną %@ górnicy, nie Wraith Wallet. Upewnij się, że masz wystarczająco dużo %@.";
+"brand_name" = "Wraith Wallet";
 "info.insufficient_balance.title" = "Niewystarczające saldo";
 "info.insufficient_balance.description" = "Nie masz wystarczająco %@ aby ukończyć tę transakcję. Doładuj, odbierz lub wymień w swoim portfelu i spróbuj ponownie.";
 "info.account_minimum_balance.title" = "Minimalne saldo";
@@ -524,7 +524,7 @@
 "nft.report.reason.copyright" = "Prawo autorskie";
 "nft.report.report_button_title" = "Zgłoś";
 "rewards.title" = "Nagrody";
-"rewards.share_text" = "Dołączyć Gem Wallet z moim linkiem polecającym i zyskaj nagrody: %@";
+"rewards.share_text" = "Dołączyć Wraith Wallet z moim linkiem polecającym i zyskaj nagrody: %@";
 "rewards.my_referral_code" = "Mój kod polecający";
 "rewards.invite_friends.title" = "Zaproś znajomych";
 "rewards.invite_friends.description" = "Zarabiać %@ punktów za każdego dołączonego znajomego.";

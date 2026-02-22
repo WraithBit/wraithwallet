@@ -27,7 +27,7 @@
                BlueprintIdentifier = "D83096AB2D5D4F1E00FFEE3E"
                BuildableName = "GemUITests.xctest"
                BlueprintName = "GemUITests"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

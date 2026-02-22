@@ -244,11 +244,16 @@ extension ConfirmTransferSceneViewModel {
             walletId: wallet.walletId
         )
     }
+    
     private func onSelectConfirmTransfer() {
         guard let value = state.value,
               let transactionData = value.transactionData,
               case .success(let amount) = value.transferAmount
         else { return }
+        
+        // 📊 Track trade initiated
+        trackTransferInitiated()
+        
         confirmTransfer(transactionData: transactionData, amount: amount)
     }
 
@@ -319,8 +324,16 @@ extension ConfirmTransferSceneViewModel {
                 confirmService.updateRecent(data: data, walletId: wallet.walletId)
             }
             confirmingState = .data(true)
+            
+            // 📊 Track successful transaction
+            trackTransferCompleted(transactionData: transactionData, amount: amount)
+            
         } catch {
             confirmingState = .error(error)
+            
+            // 📊 Track failed transaction
+            trackTransferFailed(error: error)
+            
             debugLog("confirm transaction error: \(error)")
         }
     }
@@ -373,5 +386,152 @@ extension ConfirmTransferSceneViewModel {
               let systemName = KeystoreAuthenticationViewModel(authentication: auth).authenticationImage
         else { return nil }
         return Image(systemName: systemName)
+    }
+}
+
+// MARK: - Analytics Tracking
+
+extension ConfirmTransferSceneViewModel {
+    
+    /// Track when transaction/swap is initiated
+    private func trackTransferInitiated() {
+        let asset = dataModel.asset
+        let chain = dataModel.chain
+        
+        // Check if this is a swap
+        if case .swap(let fromAsset, let toAsset, _) = data.type {
+            // This is a swap/trade
+            AnalyticsService.shared.trackTradeInitiated(
+                fromToken: fromAsset.symbol,
+                toToken: toAsset.symbol,
+                fromAmount: dataModel.data.value.description,
+                network: chain.rawValue
+            )
+        } else {
+            // Regular send transaction
+            AnalyticsService.shared.trackTransactionSent(
+                token: asset.symbol,
+                amount: dataModel.data.value.description,
+                network: chain.rawValue,
+                usdValue: nil
+            )
+        }
+    }
+    
+    /// Track successful transaction/swap completion
+    private func trackTransferCompleted(transactionData: TransactionData, amount: TransferAmount) {
+        let chain = dataModel.chain
+        
+        // Check if this is a swap
+        if case .swap(let fromAsset, let toAsset, let swapData) = data.type {
+            // This is a swap/trade - track as trade_completed
+            
+            // Convert raw values to human-readable amounts
+            let fromAmount = convertToHumanReadable(
+                value: swapData.quote.fromValue,
+                decimals: fromAsset.decimals
+            )
+            let toAmount = convertToHumanReadable(
+                value: swapData.quote.toValue,
+                decimals: toAsset.decimals
+            )
+            
+            // Calculate USD value (set to 0 if price not available)
+            let usdValue = calculateSwapUSDValue(fromAsset: fromAsset, fromAmount: swapData.quote.fromValue)
+            
+            AnalyticsService.shared.trackTradeCompleted(
+                fromToken: fromAsset.symbol,
+                toToken: toAsset.symbol,
+                fromAmount: fromAmount,
+                toAmount: toAmount,
+                usdValue: usdValue,
+                network: chain.rawValue,
+                transactionHash: "pending",
+                gasFeeUSD: nil,
+                dexProtocol: swapData.quote.providerData.name
+            )
+        } else {
+            // Regular send transaction
+            let asset = dataModel.asset
+            
+            AnalyticsService.shared.trackTransactionSent(
+                token: asset.symbol,
+                amount: dataModel.data.value.description,
+                network: chain.rawValue,
+                usdValue: nil
+            )
+        }
+    }
+    
+    /// Track failed transaction/swap
+    private func trackTransferFailed(error: Error) {
+        let failureReason = getFailureReason(from: error)
+        
+        // Check if this is a swap
+        if case .swap(let fromAsset, let toAsset, _) = data.type {
+            // Track as trade failure
+            AnalyticsService.shared.trackTradeFailed(
+                fromToken: fromAsset.symbol,
+                toToken: toAsset.symbol,
+                reason: failureReason,
+                errorMessage: error.localizedDescription
+            )
+        } else {
+            // Track as general error
+            AnalyticsService.shared.trackError(
+                errorType: "transaction_failed",
+                errorMessage: error.localizedDescription,
+                context: "transfer"
+            )
+        }
+    }
+    
+    /// Extract failure reason from error
+    private func getFailureReason(from error: Error) -> String {
+        if let calcError = error as? TransferAmountCalculatorError {
+            switch calcError {
+            case .insufficientBalance: return "insufficient_balance"
+            case .insufficientNetworkFee: return "insufficient_network_fee"
+            case .minimumAccountBalanceTooLow: return "minimum_balance_too_low"
+            }
+        }
+        
+        if let scanError = error as? ScanTransactionError {
+            switch scanError {
+            case .malicious: return "malicious_transaction"
+            case .memoRequired: return "memo_required"
+            }
+        }
+        
+        if let chainError = ChainCoreError.fromError(error) {
+            switch chainError {
+            case .dustThreshold: return "dust_threshold"
+            case .feeRateMissed: return "fee_rate_missed"
+            case .cantEstimateFee: return "cant_estimate_fee"
+            case .incorrectAmount: return "incorrect_amount"
+            }
+        }
+        
+        return "unknown_error"
+    }
+    
+    /// Calculate USD value for swap
+    /// Note: Returns 0 if price data not available - can be enhanced later with price service
+    private func calculateSwapUSDValue(fromAsset: Asset, fromAmount: String) -> Double {
+        // fromAmount is already a string representation of the value
+        // For now, return 0 since we don't have price data available
+        // TODO: Integrate with price service to get actual USD values
+        return 0.0
+    }
+    
+    /// Convert raw blockchain value to human-readable decimal amount
+    private func convertToHumanReadable(value: String, decimals: Int32) -> String {
+        guard let bigIntValue = BigInt(value) else { return value }
+        
+        let decimalValue = Decimal(string: bigIntValue.description) ?? 0
+        let divisor = pow(Decimal(10), Int(decimals))
+        let humanReadable = decimalValue / divisor
+        
+        return "\(humanReadable)"
     }
 }

@@ -18,7 +18,7 @@
                BlueprintIdentifier = "D8C4A2402C8A7B14006FABE8"
                BuildableName = "GemDev.app"
                BlueprintName = "GemDev"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,7 +47,7 @@
             BlueprintIdentifier = "D8C4A2402C8A7B14006FABE8"
             BuildableName = "GemDev.app"
             BlueprintName = "GemDev"
-            ReferencedContainer = "container:Gem.xcodeproj">
+            ReferencedContainer = "container:Wraith.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -64,7 +64,7 @@
             BlueprintIdentifier = "D8C4A2402C8A7B14006FABE8"
             BuildableName = "GemDev.app"
             BlueprintName = "GemDev"
-            ReferencedContainer = "container:Gem.xcodeproj">
+            ReferencedContainer = "container:Wraith.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

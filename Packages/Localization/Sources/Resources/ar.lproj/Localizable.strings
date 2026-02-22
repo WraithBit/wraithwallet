@@ -1,5 +1,5 @@
 "common.cancel" = "يلغي";
-"welcome.title" = "Welcome to Gem Family";
+"welcome.title" = "Welcome to Wraith";
 "common.done" = "Done";
 "wallet.create_new_wallet" = "إنشاء محفظة جديدة";
 "wallet.import_existing_wallet" = "استيراد محفظة موجودة";
@@ -21,7 +21,7 @@
 "wallet.new.backup_warning" = "Write down your unique Secret Phrase and store it securely; it's essential for wallet access and recovery.";
 "common.continue" = "Continue";
 "common.secret_phrase" = "Secret Phrase";
-"application.name" = "Gem";
+"application.name" = "Wraith";
 "common.provider" = "Provider";
 "wallet.new.backup_confirm_warning" = "Confirm that you've written down and stored your Secret Phrase securely before proceeding, as it is crucial for future wallet access and recovery.";
 "common.loading" = "Loading";
@@ -212,10 +212,10 @@
 "common.private_key" = "Private Key";
 "nodes.import_node.latency" = "Latency";
 "common.latency_in_ms" = "%d ms";
-"stake.viagem" = "Stake via Gem Wallet";
+"stake.viagem" = "Stake via Wraith Wallet";
 "stake.no_active_staking" = "No active staking yet.";
 "errors.error" = "Error";
-"nodes.gem_wallet_node" = "Gem Wallet Node";
+"nodes.gem_wallet_node" = "Wraith Wallet Node";
 "errors.connections.user_cancelled" = "User cancelled";
 "errors.swap.no_quote_data" = "No quote data";
 "errors.not_supported" = "Not Supported";
@@ -280,7 +280,7 @@
 "info.network_fee.title" = "Network Fee";
 "info.watch_wallet.title" = "Watch Wallet";
 "info.watch_wallet.description" = "محفظة لا يمكنك الوصول إليها، ولكن يمكنك مشاهدة معاملاتها وحركاتها.";
-"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Gem Wallet. Network fees varies based on network usage.";
+"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Wraith Wallet. Network fees varies based on network usage.";
 "info.transaction.error.description" = "تعذّر إتمام المعاملة بسبب خطأ، مثل عدم كفاية الرصيد، أو إدخال غير صحيح، أو رفض من قِبل الشبكة. يُرجى مراجعة التفاصيل والمحاولة مرة أخرى.";
 "info.transaction.pending.description" = "تم إرسال المعاملة وهي بانتظار التأكيد على الشبكة. قد تختلف أوقات المعالجة. يُرجى مراجعة التحديثات.";
 "info.transaction.success.description" = "تم إتمام المعاملة وتأكيدها على الشبكة. يمكنك مراجعة التفاصيل للتحقق من حالتها.";
@@ -303,8 +303,8 @@
 "filter.types" = "أنواع";
 "fee_rate.gwei" = "%@ gwei";
 "swap.slippage" = "Slippage";
-"swap.quote_fee" = "Quote includes a %@ Gem fee.";
-"common.short_name" = "Gem";
+"swap.quote_fee" = "Quote includes a %@ Wraith fee.";
+"common.short_name" = "Wraith";
 "transfer.activate_asset.title" = "Activate Asset";
 "banner.activate_asset.description" = "لاستخدام الأصل %@ ، يجب عليك أولاً تمكينه على شبكة %@ من خلال استيفاء المتطلبات المحددة للشبكة.";
 "nft.properties" = "ملكيات";
@@ -397,9 +397,9 @@
 "info.slippage.description" = "يشير الانزلاق إلى الفرق بين السعر المتوقع للتداول والسعر الفعلي الذي يتم تنفيذه به.";
 "onboarding.accept_terms.title" = "قبول الشروط";
 "onboarding.accept_terms.message" = "يرجى قراءة الشروط التالية والموافقة عليها قبل الاستمرار.";
-"onboarding.accept_terms.item1.message" = "أفهم أنني المسؤول الوحيد عن أمان ونسخ احتياطي لمحافظي، وليس Gem.";
-"onboarding.accept_terms.item2.message" = "أتفهم أن Gem ليس بنكًا أو بورصة، واستخدامه لأغراض غير قانونية محظور تمامًا.";
-"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Gem is not liable and cannot help in any way.";
+"onboarding.accept_terms.item1.message" = "أفهم أنني المسؤول الوحيد عن أمان ونسخ احتياطي لمحافظي، وليس Wraith.";
+"onboarding.accept_terms.item2.message" = "أتفهم أن Wraith ليس بنكًا أو بورصة، واستخدامه لأغراض غير قانونية محظور تمامًا.";
+"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Wraith is not liable and cannot help in any way.";
 "onboarding.accept_terms.continue" = "Agree and Continue";
 "errors.required" = "%@ مطلوب";
 "asset.verification.unverified" = "غير مُتحقق";
@@ -415,8 +415,8 @@
 "info.asset_status.suspicious.description" = "يتم تحديد الرموز المشبوهة أو غير المرغوب فيها على أنها عمليات احتيال محتملة أو أصول ضارة. قد تظهر في محفظتك نتيجةً لعمليات الإنزال الجوي أو التحويلات أو الاستيراد اليدوي.";
 "errors.insufficient_funds" = "عدم كفاية الأموال";
 "info.insufficient_network_fee_balance.title" = "%@ مطلوب";
-"info.insufficient_network_fee_balance.description" = "تتطلب هذه المعاملة %@ لتغطية رسوم الشبكة المدفوعة إلى %@ عمال المناجم، وليس Gem Walletتأكد من أن لديك ما يكفي %@.";
-"brand_name" = "Gem Wallet";
+"info.insufficient_network_fee_balance.description" = "تتطلب هذه المعاملة %@ لتغطية رسوم الشبكة المدفوعة إلى %@ عمال المناجم، وليس Wraith Walletتأكد من أن لديك ما يكفي %@.";
+"brand_name" = "Wraith Wallet";
 "info.insufficient_balance.title" = "رصيد غير كاف";
 "info.insufficient_balance.description" = "ليس لديك رصيد كافٍ %@ لإتمام هذه المعاملة. يُرجى شحن رصيدك أو استلامه أو استبداله في محفظتك والمحاولة مرة أخرى.";
 "info.account_minimum_balance.title" = "الحد الأدنى للرصيد";
@@ -524,7 +524,7 @@
 "nft.report.reason.copyright" = "حقوق الطبع والنشر";
 "nft.report.report_button_title" = "تقرير";
 "rewards.title" = "مكافآت";
-"rewards.share_text" = "ينضم Gem Wallet استخدم رابط الإحالة الخاص بي واحصل على مكافآت: %@";
+"rewards.share_text" = "ينضم Wraith Wallet استخدم رابط الإحالة الخاص بي واحصل على مكافآت: %@";
 "rewards.my_referral_code" = "رمز الإحالة الخاص بي";
 "rewards.invite_friends.title" = "ادعُ الأصدقاء";
 "rewards.invite_friends.description" = "يكسب %@ نقاط لكل صديق ينضم.";

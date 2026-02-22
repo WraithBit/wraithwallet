@@ -38,7 +38,7 @@ extension WalletConnectorService: WalletConnectorServiceable {
         WalletKit.configure(
             metadata: AppMetadata(
                 name: Constants.App.name,
-                description: "Gem Web3 Wallet",
+                description: "Wraith Web3 Wallet",
                 url: Constants.App.website,
                 icons: ["https://gemwallet.com/images/gem-logo-256x256.png"],
                 redirect: try AppMetadata.Redirect(

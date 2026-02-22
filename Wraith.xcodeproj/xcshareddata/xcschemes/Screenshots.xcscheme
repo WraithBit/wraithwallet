@@ -27,7 +27,7 @@
                BlueprintIdentifier = "D8A1F8722B17F21E00B15F54"
                BuildableName = "Screenshots.xctest"
                BlueprintName = "Screenshots"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -52,7 +52,7 @@
                BlueprintIdentifier = "D8A1F8722B17F21E00B15F54"
                BuildableName = "Screenshots.xctest"
                BlueprintName = "Screenshots"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -92,7 +92,7 @@
             BlueprintIdentifier = "D8A1F8722B17F21E00B15F54"
             BuildableName = "Screenshots.xctest"
             BlueprintName = "Screenshots"
-            ReferencedContainer = "container:Gem.xcodeproj">
+            ReferencedContainer = "container:Wraith.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

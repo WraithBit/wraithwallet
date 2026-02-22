@@ -16,6 +16,7 @@ import WalletsService
 import PriceService
 import BannerService
 import Formatters
+import MarketInsight
 
 @Observable
 @MainActor
@@ -25,6 +26,10 @@ public final class AssetSceneViewModel: Sendable {
     private let transactionsService: TransactionsService
     private let priceObserverService: PriceObserverService
     private let bannerService: BannerService
+
+    // Charts deps
+    private let chartService: ChartService
+    private let priceService: PriceService
 
     private let preferences: ObservablePreferences = .default
 
@@ -44,6 +49,9 @@ public final class AssetSceneViewModel: Sendable {
     private var asset: Asset { assetData.asset }
     private var wallet: Wallet { walletModel.wallet }
 
+    // Chart scene view model (new repo)
+    public var chartSceneViewModel: ChartSceneViewModel?
+
     public init(
         walletsService: WalletsService,
         assetsService: AssetsService,
@@ -51,6 +59,8 @@ public final class AssetSceneViewModel: Sendable {
         priceObserverService: PriceObserverService,
         priceAlertService: PriceAlertService,
         bannerService: BannerService,
+        priceService: PriceService,
+        chartService: ChartService = ChartService(),
         input: AssetSceneInput,
         isPresentingSelectedAssetInput: Binding<SelectedAssetInput?>
     ) {
@@ -61,12 +71,26 @@ public final class AssetSceneViewModel: Sendable {
         self.priceAlertService = priceAlertService
         self.bannerService = bannerService
 
+        self.priceService = priceService
+        self.chartService = chartService
+
         self.input = input
         self.chainAssetData = ChainAssetData(
             assetData: AssetData.with(asset: input.asset),
             feeAssetData: AssetData.with(asset: input.asset.chain.asset)
         )
         self.isPresentingSelectedAssetInput = isPresentingSelectedAssetInput
+
+        // Create chart VM (bind alert sheet trigger however you handle it in this repo)
+        self.chartSceneViewModel = ChartSceneViewModel(
+            service: chartService,
+            priceService: priceService,
+            assetModel: AssetViewModel(asset: input.asset),
+            priceAlertService: priceAlertService,
+            walletId: input.wallet.walletId,
+            currentPeriod: ChartValuesViewModel.defaultPeriod,
+            isPresentingSetPriceAlert: .constant(nil)
+        )
     }
 
     public var title: String { assetModel.name }
@@ -74,7 +98,7 @@ public final class AssetSceneViewModel: Sendable {
     var balancesTitle: String { Localized.Asset.balances }
     var networkTitle: String { Localized.Transfer.network }
     var stakeTitle: String { Localized.Wallet.stake }
-    
+
     var resourcesTitle: String { Localized.Asset.resources }
     var energyTitle: String { ResourceViewModel(resource: .energy).title }
     var bandwidthTitle: String { ResourceViewModel(resource: .bandwidth).title }
@@ -85,13 +109,17 @@ public final class AssetSceneViewModel: Sendable {
 
     var showBalances: Bool { assetDataModel.showBalances }
     private var showStakedBalanceTypes: [BalanceType] = [.staked, .pending, .rewards]
-    var showStakedBalance: Bool { assetDataModel.isStakeEnabled || assetData.balances.contains(where: { showStakedBalanceTypes.contains($0.key) && $0.value > 0 }) }
+    var showStakedBalance: Bool {
+        assetDataModel.isStakeEnabled || assetData.balances.contains(where: { showStakedBalanceTypes.contains($0.key) && $0.value > 0 })
+    }
     var showReservedBalance: Bool { assetDataModel.hasReservedBalance }
     var showPendingUnconfirmedBalance: Bool { assetDataModel.hasPendingUnconfirmedBalance }
     var showResources: Bool { assetDataModel.showResources }
 
     var showTransactions: Bool { transactions.isNotEmpty }
-    var showManageToken: Bool { !assetData.metadata.isBalanceEnabled }
+
+    // ✅ restore old behaviour: always show manage section (pin / hide-from-wallet)
+    var showManageToken: Bool { true }
 
     var canSign: Bool { wallet.canSign }
 
@@ -104,6 +132,7 @@ public final class AssetSceneViewModel: Sendable {
     var pinImage: Image {
         Image(systemName: pinSystemImage)
     }
+
     var enableText: String {
         assetData.metadata.isBalanceEnabled ? Localized.Asset.hideFromWallet : Localized.Asset.addToWallet
     }
@@ -113,7 +142,7 @@ public final class AssetSceneViewModel: Sendable {
     var enableSystemImage: String {
         assetData.metadata.isBalanceEnabled ? SystemImage.minusCircle : SystemImage.plusCircle
     }
-    
+
     var reservedBalanceUrl: URL? { assetModel.asset.chain.accountActivationFeeUrl }
 
     var networkText: String { assetModel.networkFullName }
@@ -148,11 +177,11 @@ public final class AssetSceneViewModel: Sendable {
             currencyCode: preferences.preferences.currency
         )
     }
-    
+
     var assetBannerViewModel: AssetSceneBannersViewModel {
         AssetSceneBannersViewModel(assetData: assetData, banners: banners)
     }
-    
+
     var assetHeaderModel: AssetHeaderViewModel {
         AssetHeaderViewModel(
             assetDataModel: assetDataModel,
@@ -171,9 +200,12 @@ public final class AssetSceneViewModel: Sendable {
     public var showPriceAlerts: Bool { priceAlertsViewModel.hasPriceAlerts && assetDataModel.isPriceAvailable }
 
     public var menuItems: [ActionMenuItemType] {
-        [.button(title: viewAddressOnTitle, systemImage: SystemImage.globe, action: { self.onSelect(url: self.addressExplorerUrl) }),
-         viewTokenOnTitle.map { .button(title: $0, systemImage: SystemImage.globe, action: { self.onSelect(url: self.tokenExplorerUrl) })},
-         .button(title: Localized.Common.share, systemImage: SystemImage.share, action: onSelectShareAsset)].compactMap { $0 }
+        [
+            .button(title: viewAddressOnTitle, systemImage: SystemImage.globe, action: { self.onSelect(url: self.addressExplorerUrl) }),
+            viewTokenOnTitle.map { .button(title: $0, systemImage: SystemImage.globe, action: { self.onSelect(url: self.tokenExplorerUrl) }) },
+            .button(title: Localized.Common.share, systemImage: SystemImage.share, action: onSelectShareAsset)
+        ]
+        .compactMap { $0 }
     }
 
     var scoreViewModel: AssetScoreTypeViewModel {
@@ -183,36 +215,33 @@ public final class AssetSceneViewModel: Sendable {
     var showStatus: Bool {
         scoreViewModel.hasWarning
     }
-    
+
     var priceAlertsViewModel: PriceAlertsViewModel {
         PriceAlertsViewModel(priceAlerts: assetData.priceAlerts)
     }
-    
+
     var swapAssetType: SelectedAssetType {
         switch assetData.asset.id.type {
-        case .native: .swap(assetData.asset, nil)
+        case .native:
+            return .swap(assetData.asset, nil)
         case .token:
             if assetData.balance.available == .zero {
-                .swap(assetData.asset.chain.asset, assetData.asset)
+                return .swap(assetData.asset.chain.asset, assetData.asset)
             } else {
-                .swap(assetData.asset, nil)
+                return .swap(assetData.asset, nil)
             }
         }
     }
 }
 
-
 // MARK: - Business Logic
 
 extension AssetSceneViewModel {
     func fetchOnce() {
-        Task {
-            await fetch()
-        }
-        Task {
-            await updateAsset()
-        }
-        
+        Task { await fetch() }
+        Task { await updateAsset() }
+        Task { await chartSceneViewModel?.fetch() }
+
         if assetData.priceAlerts.isNotEmpty {
             Task {
                 try await priceAlertService.update(assetId: asset.id.identifier)
@@ -256,24 +285,19 @@ extension AssetSceneViewModel {
                     TransferData(
                         type: .account(assetData.asset, .activate),
                         recipientData: RecipientData(
-                            recipient: Recipient(
-                                name: .none,
-                                address: "",
-                                memo: .none
-                            ),
+                            recipient: Recipient(name: .none, address: "", memo: .none),
                             amount: .none
                         ),
                         value: 0
                     )
                 )
             case .enableNotifications,
-                    .accountActivation,
-                    .accountBlockedMultiSignature,
-                    .onboarding:
-                Task {
-                    try await bannerService.handleAction(action)
-                }
-            case .suspiciousAsset: break
+                 .accountActivation,
+                 .accountBlockedMultiSignature,
+                 .onboarding:
+                Task { try await bannerService.handleAction(action) }
+            case .suspiciousAsset:
+                break
             case .tradePerpetuals:
                 UIApplication.shared.open(DeepLink.perpetuals.localUrl)
                 preferences.isPerpetualEnabled = true
@@ -284,28 +308,16 @@ extension AssetSceneViewModel {
             case .receive: onSelectHeader(.receive)
             }
         case .closeBanner:
-            Task {
-                try await bannerService.handleAction(action)
-            }
+            Task { try await bannerService.handleAction(action) }
         }
         onSelect(url: action.url)
     }
 
-    func onSelectBuy() {
-        onSelectHeader(.buy)
-    }
+    func onSelectBuy() { onSelectHeader(.buy) }
+    func onSelectSwap() { onSelectHeader(.swap) }
 
-    func onSelectSwap() {
-        onSelectHeader(.swap)
-    }
-
-    public func onSelectShareAsset() {
-        isPresentingAssetSheet = .share
-    }
-
-    public func onTransferComplete() {
-        isPresentingAssetSheet = .none
-    }
+    public func onSelectShareAsset() { isPresentingAssetSheet = .share }
+    public func onTransferComplete() { isPresentingAssetSheet = .none }
 
     public func onTogglePriceAlert() {
         Task {
@@ -318,7 +330,7 @@ extension AssetSceneViewModel {
             }
         }
     }
-    
+
     public func onSelectTokenStatus() {
         isPresentingAssetSheet = .info(.assetStatus(scoreViewModel.scoreType))
     }
@@ -326,14 +338,20 @@ extension AssetSceneViewModel {
     public func onSelectPendingUnconfirmedInfo() {
         isPresentingAssetSheet = .info(.pendingUnconfirmedBalance)
     }
-    
+
     public func onSelectPin() {
         do {
             let pinned = !assetData.metadata.isPinned
             isPresentingToastMessage = .pin(asset.name, pinned: pinned)
             try walletsService.setPinned(pinned, walletId: wallet.walletId, assetId: asset.id)
-            if !assetData.metadata.isBalanceEnabled {
-                onSelectEnable()
+
+            // If a token is pinned, ensure it is enabled/visible
+            Task {
+                if !self.assetData.metadata.isBalanceEnabled {
+                    await self.setAssetEnabled(true)
+                }
+                // ✅ required so the UI reflects the new state immediately
+                await self.updateWallet()
             }
         } catch {
             debugLog("onSelectPin error: \(error)")
@@ -345,6 +363,9 @@ extension AssetSceneViewModel {
             let enabled = !assetData.metadata.isBalanceEnabled
             isPresentingToastMessage = .showAsset(visible: enabled)
             await walletsService.enableAssets(walletId: wallet.walletId, assetIds: [asset.id], enabled: enabled)
+
+            // ✅ required so the UI reflects the new state immediately
+            await updateWallet()
         }
     }
 }
@@ -390,7 +411,6 @@ extension AssetSceneViewModel {
         do {
             try await transactionsService.updateForAsset(wallet: walletModel.wallet, assetId: assetModel.asset.id)
         } catch {
-            // TODO: - handle fetchTransactions error
             debugLog("asset scene: fetchTransactions error \(error)")
         }
     }
@@ -417,7 +437,6 @@ extension AssetSceneViewModel {
         do {
             try await assetsService.updateAsset(assetId: assetModel.asset.id)
         } catch {
-            // TODO: - handle updateAsset error
             debugLog("asset scene: updateAsset error \(error)")
         }
 
@@ -425,7 +444,6 @@ extension AssetSceneViewModel {
             do {
                 try await priceObserverService.addAssets(assets: [assetModel.asset.id])
             } catch {
-                // TODO: - handle priceObserverService.addAssets error
                 debugLog("asset scene: priceObserverService.addAssets error \(error)")
             }
         }
@@ -440,8 +458,12 @@ extension AssetSceneViewModel {
             async let updateTransactions: () = try fetchTransactions()
             let _ = try await [updateAsset, updateTransactions]
         } catch {
-            // TODO: - handle fetch error
             debugLog("asset scene: updateWallet error \(error)")
         }
+    }
+
+    // Ensures an asset is enabled/visible (used when pinning a hidden token)
+    private func setAssetEnabled(_ enabled: Bool) async {
+        await walletsService.enableAssets(walletId: wallet.walletId, assetIds: [asset.id], enabled: enabled)
     }
 }

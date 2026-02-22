@@ -91,7 +91,7 @@ extension TransactionsRequest {
             guard !types.isEmpty else { return request }
             return request.filter(types.contains(TransactionRecord.Columns.type))
         case .assetRankGreaterThan(let rank):
-            return request.joining(required: TransactionRecord.asset.filter(AssetRecord.Columns.rank > rank))
+            return request.joining(required: TransactionRecord.asset.filter(AssetRecord.Columns.rank >= rank))
         }
     }
 

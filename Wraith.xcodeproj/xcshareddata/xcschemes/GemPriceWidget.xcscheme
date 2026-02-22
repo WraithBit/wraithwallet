@@ -19,7 +19,7 @@
                BlueprintIdentifier = "D83819482E256A5A0076CDB3"
                BuildableName = "GemPriceWidget.appex"
                BlueprintName = "GemPriceWidget"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,9 +31,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C30952AF299C39D70004C0F9"
-               BuildableName = "Gem.app"
-               BlueprintName = "Gem"
-               ReferencedContainer = "container:Gem.xcodeproj">
+               BuildableName = "Wraith.app"
+               BlueprintName = "Wraith"
+               ReferencedContainer = "container:Wraith.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -65,16 +65,16 @@
             BlueprintIdentifier = "D83819482E256A5A0076CDB3"
             BuildableName = "GemPriceWidget.appex"
             BlueprintName = "GemPriceWidget"
-            ReferencedContainer = "container:Gem.xcodeproj">
+            ReferencedContainer = "container:Wraith.xcodeproj">
          </BuildableReference>
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C30952AF299C39D70004C0F9"
-            BuildableName = "Gem.app"
-            BlueprintName = "Gem"
-            ReferencedContainer = "container:Gem.xcodeproj">
+            BuildableName = "Wraith.app"
+            BlueprintName = "Wraith"
+            ReferencedContainer = "container:Wraith.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <EnvironmentVariables>
@@ -118,9 +118,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C30952AF299C39D70004C0F9"
-            BuildableName = "Gem.app"
-            BlueprintName = "Gem"
-            ReferencedContainer = "container:Gem.xcodeproj">
+            BuildableName = "Wraith.app"
+            BlueprintName = "Wraith"
+            ReferencedContainer = "container:Wraith.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -103,6 +103,7 @@ struct WalletNavigationStack: View {
                         priceObserverService: priceObserverService,
                         priceAlertService: priceAlertService,
                         bannerService: bannerService,
+                        priceService: priceService, // ✅ required by your updated AssetSceneViewModel
                         input: AssetSceneInput(
                             wallet: model.wallet,
                             asset: $0.asset

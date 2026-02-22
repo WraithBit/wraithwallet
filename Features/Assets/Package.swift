@@ -30,7 +30,8 @@ let package = Package(
         .package(name: "QRScanner", path: "../QRScanner"),
         .package(name: "Recents", path: "../Recents"),
         .package(name: "ChainServices", path: "../../Packages/ChainServices"),
-        .package(name: "FeatureServices", path: "../../Packages/FeatureServices")
+        .package(name: "FeatureServices", path: "../../Packages/FeatureServices"),
+        .package(name: "MarketInsight", path: "../../Packages/MarketInsight"),
     ],
     targets: [
         .target(
@@ -48,6 +49,7 @@ let package = Package(
                 "InfoSheet",
                 "QRScanner",
                 "Recents",
+                "MarketInsight",
                 .product(name: "PriceAlertService", package: "FeatureServices"),
                 .product(name: "ExplorerService", package: "ChainServices"),
                 .product(name: "AssetsService", package: "FeatureServices"),

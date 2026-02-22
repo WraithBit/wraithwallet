@@ -3,6 +3,7 @@
 import Foundation
 import SwiftUI
 import Primitives
+import PrimitivesComponents
 import WalletService
 import AvatarService
 import PrimitivesComponents
@@ -52,6 +53,21 @@ extension ImportWalletViewModel {
         let wallet = try await walletService.loadOrCreateWallet(name: data.name, type: data.keystoreType, source: .import)
         walletService.acceptTerms()
         WalletPreferences(walletId: wallet.walletId).completeInitialSynchronization()
+        
+        // 📊 Track wallet import
+        AnalyticsService.shared.trackWalletConnected(
+            walletType: "imported",
+            chainId: nil
+        )
+        
+        // Set user properties
+        if let firstAccount = wallet.accounts.first {
+            AnalyticsService.shared.setUserProperties(
+                userId: wallet.walletId.id,
+                walletAddress: firstAccount.address
+            )
+        }
+        
         return wallet
     }
 

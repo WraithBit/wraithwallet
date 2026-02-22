@@ -64,12 +64,12 @@ struct ConfirmTransferSceneViewModelTests {
         }
 
         let modelWithWebsite = ConfirmTransferSceneViewModel.mock(
-            data: .mock(type: .generic(asset: .mock(), metadata: .mock(name: "Gem Wallet", url: "https://example.com"), extra: .mock()))
+            data: .mock(type: .generic(asset: .mock(), metadata: .mock(name: "Wraith Wallet", url: "https://example.com"), extra: .mock()))
         )
         let appItemWithWebsite = modelWithWebsite.itemModel(for: .app) as? ConfirmAppViewModel
 
         if case .app(let listItem) = appItemWithWebsite?.itemModel {
-            #expect(listItem.subtitle == "Gem Wallet (example.com)")
+            #expect(listItem.subtitle == "Wraith Wallet (example.com)")
         } else {
             Issue.record("Expected app item model")
         }

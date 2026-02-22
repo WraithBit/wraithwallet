@@ -6,6 +6,7 @@ import Components
 import Style
 import PrimitivesComponents
 import Localization
+import MarketInsight
 
 public struct AssetScene: View {
     private let model: AssetSceneViewModel
@@ -16,6 +17,8 @@ public struct AssetScene: View {
 
     public var body: some View {
         List {
+            chartSection
+
             Section { } header: {
                 WalletHeaderView(
                     model: model.assetHeaderModel,
@@ -27,7 +30,7 @@ public struct AssetScene: View {
                 .padding(.bottom, .medium)
             }
             .cleanListRow()
-            
+
             if model.canSign, let banner = model.assetBannerViewModel.allBanners.first {
                 Section {
                     BannerView(
@@ -43,7 +46,7 @@ public struct AssetScene: View {
                     AssetStatusView(model: model.scoreViewModel, action: model.onSelectTokenStatus)
                 }
             }
-            
+
             if model.showManageToken {
                 Section(Localized.Common.manage) {
                     NavigationCustomLink(with:
@@ -64,14 +67,14 @@ public struct AssetScene: View {
                     }
                 }
             }
-            
+
             Section {
                 NavigationLink(
                     value: Scenes.Price(asset: model.assetModel.asset),
                     label: { PriceListItemView(model: model.priceItemViewModel) }
                 )
                 .accessibilityIdentifier("price")
-                
+
                 if model.showPriceAlerts {
                     NavigationLink(
                         value: Scenes.AssetPriceAlert(asset: model.assetData.asset),
@@ -159,11 +162,67 @@ public struct AssetScene: View {
         }
         .refreshable {
             await model.fetch()
+            await model.chartSceneViewModel?.fetch()
         }
         .taskOnce(model.fetchOnce)
         .listSectionSpacing(.compact)
         .navigationTitle(model.title)
         .contentMargins([.top], .small, for: .scrollContent)
+    }
+}
+
+// MARK: - Chart section
+
+extension AssetScene {
+    @ViewBuilder
+    private var chartSection: some View {
+        if let chartsVM = model.chartSceneViewModel {
+            Section { } header: {
+                chartStateView(chartsVM)
+                    .padding(.top, -16)
+            }
+            .cleanListRow()
+            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        }
+    }
+
+    @ViewBuilder
+    private func chartStateView(_ chartsVM: ChartSceneViewModel) -> some View {
+        switch chartsVM.state {
+        case .noData:
+            StateEmptyView(title: chartsVM.emptyTitle)
+                .frame(height: 200)
+
+        case .loading:
+            LoadingView()
+                .frame(height: 200)
+
+        case .data(let chartModel):
+            chartDataView(chartModel, chartsVM)
+
+        case .error(let error):
+            StateEmptyView(
+                title: chartsVM.errorTitle,
+                description: chartsVM.description(for: error)
+            )
+            .frame(height: 200)
+        }
+    }
+
+    private func chartDataView(_ chartModel: ChartValuesViewModel, _ chartsVM: ChartSceneViewModel) -> some View {
+        VStack(spacing: 0) {
+            ChartView(model: chartModel, verticalPadding: 24)
+                .frame(height: 120)
+
+            PeriodSelectorView(
+                selectedPeriod: .init(
+                    get: { chartsVM.currentPeriod },
+                    set: { chartsVM.currentPeriod = $0 }
+                )
+            )
+            .padding(.horizontal, .medium)
+            .padding(.bottom, .small)
+        }
     }
 }
 
@@ -186,7 +245,7 @@ extension AssetScene {
         )
         .accessibilityIdentifier("stake")
     }
-    
+
     private var stakeViewEmpty: some View {
         NavigationCustomLink(
             with: HStack(spacing: .space12) {

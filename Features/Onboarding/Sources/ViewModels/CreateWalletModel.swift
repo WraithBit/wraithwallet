@@ -7,6 +7,7 @@ import WalletService
 import AvatarService
 import Preferences
 import GemstonePrimitives
+import PrimitivesComponents
 
 @Observable
 @MainActor
@@ -53,6 +54,21 @@ extension CreateWalletModel {
             source: .create
         )
         walletService.acceptTerms()
+        
+        // 📊 Track wallet creation
+        AnalyticsService.shared.trackWalletConnected(
+            walletType: "created",
+            chainId: nil
+        )
+        
+        // Set user properties
+        if let firstAccount = wallet.accounts.first {
+            AnalyticsService.shared.setUserProperties(
+                userId: wallet.walletId.id,
+                walletAddress: firstAccount.address
+            )
+        }
+        
         return wallet
     }
 

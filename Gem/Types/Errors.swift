@@ -8,7 +8,12 @@ import Primitives
 extension Gemstone.GatewayError: @retroactive LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .NetworkError(let string): string
+        case .NetworkError(let string):
+            return string
+
+        @unknown default:
+            // Fallback for any new cases added in the Gemstone module
+            return String(describing: self)
         }
     }
 }
@@ -16,7 +21,11 @@ extension Gemstone.GatewayError: @retroactive LocalizedError {
 extension Gemstone.GemstoneError: @retroactive LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .AnyError(let string): string
+        case .AnyError(let string):
+            return string
+
+        @unknown default:
+            return String(describing: self)
         }
     }
 }
@@ -24,19 +33,28 @@ extension Gemstone.GemstoneError: @retroactive LocalizedError {
 extension Gemstone.SwapperError: @retroactive LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .NotSupportedChain: Localized.Errors.Swap.notSupportedChain
-        case .NotSupportedAsset: Localized.Errors.Swap.notSupportedAsset
-        case .NoQuoteAvailable: Localized.Errors.Swap.noQuoteAvailable
-        case .NotSupportedPair, .NoAvailableProvider: Localized.Errors.Swap.notSupportedPair
-        case .InputAmountTooSmall: Localized.Errors.Swap.amountTooSmall
+        case .NotSupportedChain: return Localized.Errors.Swap.notSupportedChain
+        case .NotSupportedAsset: return Localized.Errors.Swap.notSupportedAsset
+        case .NoQuoteAvailable: return Localized.Errors.Swap.noQuoteAvailable
+        case .NotSupportedPair, .NoAvailableProvider: return Localized.Errors.Swap.notSupportedPair
+        case .InputAmountTooSmall: return Localized.Errors.Swap.amountTooSmall
+
         case .InvalidAddress(let error),
              .InvalidAmount(let error),
              .NetworkError(let error),
              .AbiError(let error),
              .ComputeQuoteError(let error),
-             .TransactionError(let error): error
-        case .InvalidRoute: "Invalid Route"
-        case .NotImplemented: AnyError.notImplemented.errorDescription
+             .TransactionError(let error):
+            return error
+
+        case .InvalidRoute:
+            return "Invalid route"
+
+        case .NotImplemented:
+            return AnyError.notImplemented.errorDescription
+
+        @unknown default:
+            return String(describing: self)
         }
     }
 }
@@ -44,9 +62,12 @@ extension Gemstone.SwapperError: @retroactive LocalizedError {
 extension Gemstone.AlienError: @retroactive LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .RequestError(msg: let msg): msg
-        case .ResponseError(msg: let msg):  msg
-        case .Http(let status, _): "Response Status: \(status)"
+        case .RequestError(msg: let msg): return msg
+        case .ResponseError(msg: let msg): return msg
+        case .Http(let status, _): return "Response status: \(status)"
+
+        @unknown default:
+            return String(describing: self)
         }
     }
 }

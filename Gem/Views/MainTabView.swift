@@ -2,6 +2,7 @@
 
 import SwiftUI
 import Primitives
+import PrimitivesComponents
 import GRDB
 import GRDBQuery
 import Store
@@ -14,6 +15,11 @@ import Transactions
 import Assets
 import PriceAlerts
 import Components
+
+// Swap + confirm
+import Swap
+import SwapService
+import Transfer
 
 struct MainTabView: View {
     @Environment(\.scenePhase) private var scenePhase
@@ -31,10 +37,19 @@ struct MainTabView: View {
     @Environment(\.priceAlertService) private var priceAlertService
     @Environment(\.transactionsService) private var transactionsService
 
+    // Swap deps
+    @Environment(\.keystore) private var keystore
+    @Environment(\.swapService) private var swapService
+
     private let model: MainTabViewModel
 
     @Query<TransactionsCountRequest>
     private var transactions: Int
+
+    @State private var isPresentingToastMessage: ToastMessage?
+
+    // Swap confirm
+    @State private var pendingTransferData: TransferData?
 
     private var tabViewSelection: Binding<TabItem> {
         Binding(
@@ -42,8 +57,6 @@ struct MainTabView: View {
             set: { onSelect(tab: $0) }
         )
     }
-
-    @State private var isPresentingToastMessage: ToastMessage?
 
     init(model: MainTabViewModel) {
         self.model = model
@@ -66,15 +79,15 @@ struct MainTabView: View {
                 tabItem(Localized.Wallet.title, Images.Tabs.wallet)
             }
             .tag(TabItem.wallet)
-            
+
             if model.isMarketEnabled {
                 MarketsNavigationStack()
-                .tabItem {
-                    tabItem("Markets", Images.Tabs.markets)
-                }
-                .tag(TabItem.markets)
+                    .tabItem {
+                        tabItem("Markets", Images.Tabs.markets)
+                    }
+                    .tag(TabItem.markets)
             }
-            
+
             if model.isCollectionsEnabled {
                 CollectionsNavigationStack(
                     model: CollectionsViewModel(
@@ -89,7 +102,27 @@ struct MainTabView: View {
                 }
                 .tag(TabItem.collections)
             }
-            
+
+            // ✅ Swap tab (re-added)
+            SwapNavigationStack(
+                wallet: model.wallet,
+                defaultAsset: getDefaultSwapAsset(),
+                swapQuotesProvider: SwapQuotesProvider(swapService: swapService),
+                swapQuoteDataProvider: SwapQuoteDataProvider(keystore: keystore, swapService: swapService),
+                priceAlertService: priceAlertService,
+                onOpenAsset: { asset in
+                    navigationState.selectedTab = .wallet
+                    navigationState.wallet.append(Scenes.Asset(asset: asset))
+                },
+                onSwapBuilt: { data in
+                    pendingTransferData = data
+                }
+            )
+            .tabItem {
+                tabItem("Swap", Image(systemName: "arrow.left.arrow.right.circle"))
+            }
+            .tag(TabItem.swap)
+
             TransactionsNavigationStack(
                 model: TransactionsViewModel(
                     transactionsService: transactionsService,
@@ -114,6 +147,8 @@ struct MainTabView: View {
             }
             .tag(TabItem.settings)
         }
+
+        // ✅ Selected asset flow (new repo way)
         .sheet(item: presenter.isPresentingAssetInput) { input in
             SelectedAssetNavigationStack(
                 input: input,
@@ -121,6 +156,8 @@ struct MainTabView: View {
                 onComplete: { onComplete(type: input.type) }
             )
         }
+
+        // ✅ Set price alert (new repo way)
         .sheet(item: presenter.isPresentingPriceAlert) { input in
             SetPriceAlertNavigationStack(
                 model: SetPriceAlertViewModel(
@@ -132,24 +169,38 @@ struct MainTabView: View {
                 )
             )
         }
-        .toast(message: $isPresentingToastMessage)
-        .onChange(of: model.walletId, onWalletIdChange)
-        .taskOnce {
-            Task {
-                await connectObservers()
+
+        // ✅ Confirm transfer after swap build
+        .sheet(
+            isPresented: Binding(
+                get: { pendingTransferData != nil },
+                set: { if !$0 { pendingTransferData = nil } }
+            )
+        ) {
+            if let data = pendingTransferData {
+                ConfirmTransferNavigationStack(
+                    wallet: model.wallet,
+                    transferData: data,
+                    onComplete: { pendingTransferData = nil }
+                )
             }
         }
-        .onChange(of: scenePhase) { (oldScene, newPhase) in
+
+        .toast(message: $isPresentingToastMessage)
+        .onChange(of: model.walletId, onWalletIdChange)
+        .onChange(of: navigationState.selectedTab) { oldTab, newTab in
+            trackTabChange(from: oldTab, to: newTab)
+        }
+        .taskOnce {
+            Task { await connectObservers() }
+        }
+        .onChange(of: scenePhase) { (_, newPhase) in
             switch newPhase {
             case .active:
-                Task {
-                    await connectObservers()
-                }
+                Task { await connectObservers() }
                 debugLog("App moved to active — restart websocket, refresh UI…")
             case .inactive:
-                Task {
-                    await disconnectObservers()
-                }
+                Task { await disconnectObservers() }
                 debugLog("App is inactive — e.g. transitioning or showing interruption UI")
             case .background:
                 debugLog("App went to background — tear down connections, save state…")
@@ -177,6 +228,32 @@ extension MainTabView {
 extension MainTabView {
     private func onSelect(tab: TabItem) {
         navigationState.select(tab: tab)
+    }
+    
+    // Track tab changes
+    private func trackTabChange(from oldTab: TabItem, to newTab: TabItem) {
+        let pageName: String
+        
+        switch newTab {
+        case .wallet:
+            pageName = "wallet"
+            AnalyticsService.shared.trackPortfolioViewed()
+        case .markets:
+            pageName = "markets"
+        case .collections:
+            pageName = "collections"
+        case .swap:
+            pageName = "swap"
+        case .activity:
+            pageName = "activity"
+            AnalyticsService.shared.trackTransactionHistoryViewed()
+        case .settings:
+            pageName = "settings"
+        @unknown default:
+            pageName = "unknown"
+        }
+        
+        AnalyticsService.shared.trackPageView(pageName: pageName)
     }
 
     private func onWalletIdChange() {
@@ -208,6 +285,7 @@ extension MainTabView {
         switch type {
         case .receive, .stake, .buy, .sell:
             presenter.isPresentingAssetInput.wrappedValue = nil
+
         case let .send(type):
             switch type {
             case .nft:
@@ -220,6 +298,7 @@ extension MainTabView {
                 break
             }
             presenter.isPresentingAssetInput.wrappedValue = nil
+
         case let .swap(fromAsset, _):
             Task {
                 let asset = try await assetsService.getOrFetchAsset(for: fromAsset.id)
@@ -230,12 +309,24 @@ extension MainTabView {
                 case .activity:
                     navigationState.wallet = NavigationPath([Scenes.Asset(asset: asset)])
                     navigationState.selectedTab = .wallet
-                case .markets, .settings, .collections:
+                case .markets, .settings, .collections, .swap:
+                    break
+                @unknown default:
                     break
                 }
+
                 presenter.isPresentingAssetInput.wrappedValue = nil
             }
         }
     }
-}
 
+    private func getDefaultSwapAsset() -> Asset {
+        if let solanaAccount = model.wallet.accounts.first(where: { $0.chain == .solana }) {
+            return solanaAccount.chain.asset
+        }
+        if let firstAccount = model.wallet.accounts.first {
+            return firstAccount.chain.asset
+        }
+        return Chain.solana.asset
+    }
+}

@@ -1,5 +1,5 @@
 "common.cancel" = "Отмена";
-"welcome.title" = "Добро пожаловать в Gem семью";
+"welcome.title" = "Добро пожаловать в Wraith семью";
 "common.done" = "Готово";
 "wallet.create_new_wallet" = "Создать новый кошелек";
 "wallet.import_existing_wallet" = "Импорт существующего кошелька";
@@ -21,7 +21,7 @@
 "wallet.new.backup_warning" = "Запишите свой уникальный Секретная фраза и надежно сохраните его; это необходимо для доступа к кошельку и восстановления.";
 "common.continue" = "Продолжить";
 "common.secret_phrase" = "Секретная фраза";
-"application.name" = "Gem";
+"application.name" = "Wraith";
 "common.provider" = "Провайдер";
 "wallet.new.backup_confirm_warning" = "Прежде чем продолжить, подтвердите, что вы записали и сохранили свой Секретная фраза в безопасном месте, так как это имеет решающее значение для будущего доступа к кошельку и его восстановления.";
 "common.loading" = "Загрузка";
@@ -212,10 +212,10 @@
 "common.private_key" = "Приватный ключ";
 "nodes.import_node.latency" = "Задержка";
 "common.latency_in_ms" = "%d мс";
-"stake.viagem" = "Stake via Gem Wallet";
+"stake.viagem" = "Stake via Wraith Wallet";
 "stake.no_active_staking" = "Активного стейкинга пока нет.";
 "errors.error" = "Ошибка";
-"nodes.gem_wallet_node" = "Нод кошелька Gem";
+"nodes.gem_wallet_node" = "Нод кошелька Wraith";
 "errors.connections.user_cancelled" = "Отменено пользователем";
 "errors.swap.no_quote_data" = "Нет данных о котировках";
 "errors.not_supported" = "Не поддерживается";
@@ -280,7 +280,7 @@
 "info.network_fee.title" = "Сетевая плата";
 "info.watch_wallet.title" = "Watch Wallet";
 "info.watch_wallet.description" = "Кошелек, к которому у вас нет доступа, но вы можете следить за его транзакциями и движениями.";
-"info.network_fee.description" = "Каждая транзакция в сети %@ требует плату в %@ выплачиваемую майнерам за обработку вашей транзакции, а не Gem Wallet. Сетевые сборы варьируются в зависимости от использования сети.";
+"info.network_fee.description" = "Каждая транзакция в сети %@ требует плату в %@ выплачиваемую майнерам за обработку вашей транзакции, а не Wraith Wallet. Сетевые сборы варьируются в зависимости от использования сети.";
 "info.transaction.error.description" = "Транзакция не может быть завершена из-за ошибки, например, недостаточно средств, неверных данных или отклонения сетью. Пожалуйста, проверьте детали и повторите попытку.";
 "info.transaction.pending.description" = "Транзакция была отправлена и ожидает подтверждения в сети. Время обработки может меняться. Пожалуйста, проверяйте обновления.";
 "info.transaction.success.description" = "Транзакция завершена и подтверждена в сети. Вы можете просмотреть детали, чтобы проверить ее статус.";
@@ -303,8 +303,8 @@
 "filter.types" = "Типы";
 "fee_rate.gwei" = "%@ gwei";
 "swap.slippage" = "Скольжение";
-"swap.quote_fee" = "Quote includes a %@ Gem fee.";
-"common.short_name" = "Gem";
+"swap.quote_fee" = "Quote includes a %@ Wraith fee.";
+"common.short_name" = "Wraith";
 "transfer.activate_asset.title" = "Activate Asset";
 "banner.activate_asset.description" = "Чтобы использовать актив %@, необходимо сначала включить его в сети %@ выполнив особые требования сети.";
 "nft.properties" = "Характеристики";
@@ -397,9 +397,9 @@
 "info.slippage.description" = "Проскальзывание означает разницу между ожидаемой ценой сделки и фактической ценой, по которой она исполняется.";
 "onboarding.accept_terms.title" = "Принять условия";
 "onboarding.accept_terms.message" = "Прежде чем продолжить, пожалуйста, прочтите и примите следующие условия.";
-"onboarding.accept_terms.item1.message" = "Я понимаю, что ответственность за безопасность и резервное копирование моих кошельков несу исключительно я, а не Gem.";
-"onboarding.accept_terms.item2.message" = "Я понимаю, что Gem не является банком или биржей, и использование его в незаконных целях строго запрещено.";
-"onboarding.accept_terms.item3.message" = "Я понимаю, что если я потеряю доступ к своим кошелькам, Gem не несет ответственности и не сможет оказать никакой помощи.";
+"onboarding.accept_terms.item1.message" = "Я понимаю, что ответственность за безопасность и резервное копирование моих кошельков несу исключительно я, а не Wraith.";
+"onboarding.accept_terms.item2.message" = "Я понимаю, что Wraith не является банком или биржей, и использование его в незаконных целях строго запрещено.";
+"onboarding.accept_terms.item3.message" = "Я понимаю, что если я потеряю доступ к своим кошелькам, Wraith не несет ответственности и не сможет оказать никакой помощи.";
 "onboarding.accept_terms.continue" = "Согласиться и продолжить";
 "errors.required" = "%@ требуется";
 "asset.verification.unverified" = "Непроверено";
@@ -415,8 +415,8 @@
 "info.asset_status.suspicious.description" = "Подозрительные или спам‑токены помечаются как потенциальные мошеннические или вредоносные активы. Они могут появиться в вашем кошельке в результате airdrop‑раздач, переводов или ручного добавления.";
 "errors.insufficient_funds" = "Недостаточно средств";
 "info.insufficient_network_fee_balance.title" = "Требуется %@";
-"info.insufficient_network_fee_balance.description" = "Для совершения этой транзакции требуется %@ для покрытия сетевой комиссии, уплаченной %@ шахтеры, а не Gem WalletУбедитесь, что у вас достаточно средств. %@.";
-"brand_name" = "Gem Wallet";
+"info.insufficient_network_fee_balance.description" = "Для совершения этой транзакции требуется %@ для покрытия сетевой комиссии, уплаченной %@ шахтеры, а не Wraith WalletУбедитесь, что у вас достаточно средств. %@.";
+"brand_name" = "Wraith Wallet";
 "info.insufficient_balance.title" = "Недостаточный баланс";
 "info.insufficient_balance.description" = "У вас недостаточно %@ для завершения этой транзакции. Пожалуйста, пополните, получите или обменяйте ваш кошелек и попробуйте еще раз.";
 "info.account_minimum_balance.title" = "Минимальный баланс";
@@ -524,7 +524,7 @@
 "nft.report.reason.copyright" = "Авторские права";
 "nft.report.report_button_title" = "Пожаловаться";
 "rewards.title" = "Награды";
-"rewards.share_text" = "Создайте Gem Wallet по моей реферальной ссылке и получите вознаграждение: %@";
+"rewards.share_text" = "Создайте Wraith Wallet по моей реферальной ссылке и получите вознаграждение: %@";
 "rewards.my_referral_code" = "Мой реферальный код";
 "rewards.invite_friends.title" = "Пригласите друзей";
 "rewards.invite_friends.description" = "Зарабатывать %@ Баллы начисляются за каждого друга, который присоединится.";

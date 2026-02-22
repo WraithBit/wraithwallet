@@ -1,5 +1,5 @@
 "common.cancel" = "Ghairi";
-"welcome.title" = "Welcome to Gem Family";
+"welcome.title" = "Welcome to Wraith";
 "common.done" = "Done";
 "wallet.create_new_wallet" = "Create a New Wallet";
 "wallet.import_existing_wallet" = "Import an Existing Wallet";
@@ -21,7 +21,7 @@
 "wallet.new.backup_warning" = "Write down your unique Secret Phrase and store it securely; it's essential for wallet access and recovery.";
 "common.continue" = "Continue";
 "common.secret_phrase" = "Secret Phrase";
-"application.name" = "Gem";
+"application.name" = "Wraith";
 "common.provider" = "Provider";
 "wallet.new.backup_confirm_warning" = "Confirm that you've written down and stored your Secret Phrase securely before proceeding, as it is crucial for future wallet access and recovery.";
 "common.loading" = "Loading";
@@ -212,10 +212,10 @@
 "common.private_key" = "Private Key";
 "nodes.import_node.latency" = "Latency";
 "common.latency_in_ms" = "%d ms";
-"stake.viagem" = "Stake via Gem Wallet";
+"stake.viagem" = "Stake via Wraith Wallet";
 "stake.no_active_staking" = "No active staking yet.";
 "errors.error" = "Error";
-"nodes.gem_wallet_node" = "Gem Wallet Node";
+"nodes.gem_wallet_node" = "Wraith Wallet Node";
 "errors.connections.user_cancelled" = "User cancelled";
 "errors.swap.no_quote_data" = "No quote data";
 "errors.not_supported" = "Not Supported";
@@ -280,7 +280,7 @@
 "info.network_fee.title" = "Network Fee";
 "info.watch_wallet.title" = "Watch Wallet";
 "info.watch_wallet.description" = "A wallet that you do not have access to, but you can watch its transactions and movements.";
-"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Gem Wallet. Network fees varies based on network usage.";
+"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Wraith Wallet. Network fees varies based on network usage.";
 "info.transaction.error.description" = "The transaction could not be completed due to an error, such as insufficient funds, invalid input, or rejection by the network. Please review the details and try again.";
 "info.transaction.pending.description" = "The transaction has been submitted and is awaiting confirmation on the network. Processing times may vary. Please check back for updates.";
 "info.transaction.success.description" = "The transaction has been completed and confirmed on the network. You can review the details to verify its status.";
@@ -303,8 +303,8 @@
 "filter.types" = "Types";
 "fee_rate.gwei" = "%@ gwei";
 "swap.slippage" = "Slippage";
-"swap.quote_fee" = "Quote includes a %@ Gem fee.";
-"common.short_name" = "Gem";
+"swap.quote_fee" = "Quote includes a %@ Wraith fee.";
+"common.short_name" = "Wraith";
 "transfer.activate_asset.title" = "Activate Asset";
 "banner.activate_asset.description" = "To use the %@ asset, you must first enable it on the %@ network by fulfilling the network’s specific requirements.";
 "nft.properties" = "Properties";
@@ -397,9 +397,9 @@
 "info.slippage.description" = "Slippage inarejelea tofauti kati ya bei inayotarajiwa ya biashara na bei halisi ambayo inatekelezwa.";
 "onboarding.accept_terms.title" = "Kubali Masharti";
 "onboarding.accept_terms.message" = "Tafadhali soma na ukubali masharti yafuatayo kabla hujaendelea.";
-"onboarding.accept_terms.item1.message" = "Ninaelewa kuwa ninawajibika pekee kwa usalama na hifadhi rudufu ya pochi zangu, si Gem.";
-"onboarding.accept_terms.item2.message" = "Ninaelewa kuwa Gem si benki au ubadilishaji, na kuitumia kwa madhumuni yasiyo halali ni marufuku kabisa.";
-"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Gem is not liable and cannot help in any way.";
+"onboarding.accept_terms.item1.message" = "Ninaelewa kuwa ninawajibika pekee kwa usalama na hifadhi rudufu ya pochi zangu, si Wraith.";
+"onboarding.accept_terms.item2.message" = "Ninaelewa kuwa Wraith si benki au ubadilishaji, na kuitumia kwa madhumuni yasiyo halali ni marufuku kabisa.";
+"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Wraith is not liable and cannot help in any way.";
 "onboarding.accept_terms.continue" = "Agree and Continue";
 "errors.required" = "%@ inahitajika";
 "asset.verification.unverified" = "Haijathibitishwa";
@@ -415,8 +415,8 @@
 "info.asset_status.suspicious.description" = "Tokeni zinazotiliwa shaka au taka zinatambuliwa kuwa ulaghai au mali hatari. Huenda zikaonekana kwenye mkoba wako kwa sababu ya matone ya hewa, uhamisho, au uagizaji wa mikono.";
 "errors.insufficient_funds" = "Upungufu wa fedha";
 "info.insufficient_network_fee_balance.title" = "%@ inahitajika";
-"info.insufficient_network_fee_balance.description" = "Muamala huu unahitaji %@ ili kufidia ada ya mtandao iliyolipwa kwa %@ wachimbaji, si Gem WalletHakikisha una vya kutosha %@.";
-"brand_name" = "Gem Wallet";
+"info.insufficient_network_fee_balance.description" = "Muamala huu unahitaji %@ ili kufidia ada ya mtandao iliyolipwa kwa %@ wachimbaji, si Wraith WalletHakikisha una vya kutosha %@.";
+"brand_name" = "Wraith Wallet";
 "info.insufficient_balance.title" = "Mizani isiyotosha";
 "info.insufficient_balance.description" = "Huna %@ ya kutosha kukamilisha muamala huu. Tafadhali jaza, pokea, au ubadilishe pochi yako na ujaribu tena.";
 "info.account_minimum_balance.title" = "Kiwango cha chini cha usawa";
@@ -524,7 +524,7 @@
 "nft.report.reason.copyright" = "Hakimiliki";
 "nft.report.report_button_title" = "Ripoti";
 "rewards.title" = "Zawadi";
-"rewards.share_text" = "Jiunge Gem Wallet kwa kutumia kiungo changu cha rufaa na upate zawadi: %@";
+"rewards.share_text" = "Jiunge Wraith Wallet kwa kutumia kiungo changu cha rufaa na upate zawadi: %@";
 "rewards.my_referral_code" = "Nambari yangu ya rufaa";
 "rewards.invite_friends.title" = "Alika Marafiki";
 "rewards.invite_friends.description" = "Pata %@ pointi kwa kila rafiki anayejiunga.";

@@ -36,13 +36,19 @@ public struct ColorButtonStyle: ButtonStyle {
 
     @ViewBuilder
     private func background(configuration: Configuration) -> some View {
-        if #available(iOS 26, *), glassEffect.isEnabled {
-            DefaultGlassEffectShape()
-                .fill(configuration.isPressed ? palette.backgroundPressed : palette.background)
-                .glassEffect(.regular.interactive(glassEffect.isInteractive))
+        let fill = configuration.isPressed ? palette.backgroundPressed : palette.background
+
+        if glassEffect.isEnabled {
+            // Use a RoundedRectangle + Material to emulate the “glass” look
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .fill(fill)
+                .background(
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .fill(.ultraThinMaterial) // broadly similar aesthetic, widely available
+                )
         } else {
-            RoundedRectangle(cornerRadius: cornerRadius)
-                .fill(configuration.isPressed ? palette.backgroundPressed : palette.background)
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .fill(fill)
         }
     }
 
@@ -83,7 +89,6 @@ extension ButtonStyle where Self == ColorButtonStyle {
             glassEffect: glassEffect
         )
     }
-    
 
     public static func gray(
         paddingHorizontal: CGFloat = .button.paddingHorizontal,
@@ -174,7 +179,7 @@ extension ButtonStyle where Self == ColorButtonStyle {
             glassEffect: glassEffect
         )
     }
-    
+
     public static func red(
         paddingHorizontal: CGFloat = .button.paddingHorizontal,
         paddingVertical: CGFloat = .button.paddingVertical,
@@ -189,7 +194,7 @@ extension ButtonStyle where Self == ColorButtonStyle {
             glassEffect: glassEffect
         )
     }
-    
+
     public static func green(
         paddingHorizontal: CGFloat = .button.paddingHorizontal,
         paddingVertical: CGFloat = .button.paddingVertical,
@@ -204,21 +209,6 @@ extension ButtonStyle where Self == ColorButtonStyle {
             glassEffect: glassEffect
         )
     }
-
-    public static func listEmpty(
-        paddingHorizontal: CGFloat = .small,
-        paddingVertical: CGFloat = .small,
-        cornerRadius: CGFloat = .small,
-        glassEffect: GlassEffectSettings = .isInteractive
-    ) -> ColorButtonStyle {
-        ColorButtonStyle(
-            palette: .listEmpty,
-            paddingHorizontal: paddingHorizontal,
-            paddingVertical: paddingVertical,
-            cornerRadius: cornerRadius,
-            glassEffect: glassEffect
-        )
-    }
 }
 
 // MARK: – Previews
@@ -226,22 +216,14 @@ extension ButtonStyle where Self == ColorButtonStyle {
 #Preview {
     List {
         Section("ColorButtonStyle presets") {
-            Button("Blue"){}
-                .buttonStyle(.blue())
-            Button("Blue Gray Pressed"){}
-                .buttonStyle(.blueGrayPressed())
-            Button("Gray"){}
-                .buttonStyle(.gray())
-            Button("Light Gray"){}
-                .buttonStyle(.lightGray())
-            Button("List Style Color"){}
-                .buttonStyle(.listStyleColor())
-            Button("White"){}
-                .buttonStyle(.white())
-            Button("Empty"){}
-                .buttonStyle(.empty())
-            Button("Amount"){}
-                .buttonStyle(.amount())
+            Button("Blue"){}.buttonStyle(.blue())
+            Button("Blue Gray Pressed"){}.buttonStyle(.blueGrayPressed())
+            Button("Gray"){}.buttonStyle(.gray())
+            Button("Light Gray"){}.buttonStyle(.lightGray())
+            Button("List Style Color"){}.buttonStyle(.listStyleColor())
+            Button("White"){}.buttonStyle(.white())
+            Button("Empty"){}.buttonStyle(.empty())
+            Button("Amount"){}.buttonStyle(.amount())
         }
     }
     .padding()

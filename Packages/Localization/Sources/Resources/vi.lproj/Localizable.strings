@@ -1,5 +1,5 @@
 "common.cancel" = "Hủy bỏ";
-"welcome.title" = "Welcome to Gem Family";
+"welcome.title" = "Welcome to Wraith";
 "common.done" = "Done";
 "wallet.create_new_wallet" = "Tạo một ví mới";
 "wallet.import_existing_wallet" = "Nhập ví hiện có";
@@ -21,7 +21,7 @@
 "wallet.new.backup_warning" = "Write down your unique Secret Phrase and store it securely; it's essential for wallet access and recovery.";
 "common.continue" = "Continue";
 "common.secret_phrase" = "Secret Phrase";
-"application.name" = "Gem";
+"application.name" = "Wraith";
 "common.provider" = "Provider";
 "wallet.new.backup_confirm_warning" = "Confirm that you've written down and stored your Secret Phrase securely before proceeding, as it is crucial for future wallet access and recovery.";
 "common.loading" = "Loading";
@@ -212,10 +212,10 @@
 "common.private_key" = "Private Key";
 "nodes.import_node.latency" = "Latency";
 "common.latency_in_ms" = "%d ms";
-"stake.viagem" = "Stake via Gem Wallet";
+"stake.viagem" = "Stake via Wraith Wallet";
 "stake.no_active_staking" = "No active staking yet.";
 "errors.error" = "Error";
-"nodes.gem_wallet_node" = "Gem Wallet Node";
+"nodes.gem_wallet_node" = "Wraith Wallet Node";
 "errors.connections.user_cancelled" = "User cancelled";
 "errors.swap.no_quote_data" = "No quote data";
 "errors.not_supported" = "Not Supported";
@@ -280,7 +280,7 @@
 "info.network_fee.title" = "Network Fee";
 "info.watch_wallet.title" = "Watch Wallet";
 "info.watch_wallet.description" = "Một ví mà bạn không thể truy cập nhưng bạn có thể theo dõi các giao dịch và biến động của nó.";
-"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Gem Wallet. Network fees varies based on network usage.";
+"info.network_fee.description" = "Every transaction on the %@ network requires a fee in %@ paid to miners to process your transaction, not Wraith Wallet. Network fees varies based on network usage.";
 "info.transaction.error.description" = "Giao dịch không thể hoàn tất do lỗi, chẳng hạn như không đủ tiền, đầu vào không hợp lệ hoặc bị mạng từ chối. Vui lòng xem lại chi tiết và thử lại.";
 "info.transaction.pending.description" = "Giao dịch đã được gửi và đang chờ xác nhận trên mạng. Thời gian xử lý có thể thay đổi. Vui lòng kiểm tra lại để cập nhật.";
 "info.transaction.success.description" = "Giao dịch đã hoàn tất và được xác nhận trên mạng. Bạn có thể xem lại thông tin chi tiết để xác minh trạng thái của giao dịch.";
@@ -303,8 +303,8 @@
 "filter.types" = "Các loại";
 "fee_rate.gwei" = "%@ gwei";
 "swap.slippage" = "Slippage";
-"swap.quote_fee" = "Quote includes a %@ Gem fee.";
-"common.short_name" = "Gem";
+"swap.quote_fee" = "Quote includes a %@ Wraith fee.";
+"common.short_name" = "Wraith";
 "transfer.activate_asset.title" = "Activate Asset";
 "banner.activate_asset.description" = "Để sử dụng tài sản %@, trước tiên bạn phải bật nó trên mạng %@ bằng cách đáp ứng các yêu cầu cụ thể của mạng.";
 "nft.properties" = "Của cải";
@@ -397,9 +397,9 @@
 "info.slippage.description" = "Trượt giá là sự chênh lệch giữa giá dự kiến của một giao dịch và giá thực tế khi giao dịch đó được thực hiện.";
 "onboarding.accept_terms.title" = "Chấp nhận Điều khoản";
 "onboarding.accept_terms.message" = "Vui lòng đọc và đồng ý với các điều khoản sau trước khi tiếp tục.";
-"onboarding.accept_terms.item1.message" = "Tôi hiểu rằng tôi là người duy nhất chịu trách nhiệm về tính bảo mật và sao lưu ví của mình, không phải Gem.";
-"onboarding.accept_terms.item2.message" = "Tôi hiểu rằng Gem không phải là ngân hàng hay sàn giao dịch và việc sử dụng Gem cho mục đích bất hợp pháp là hoàn toàn bị nghiêm cấm.";
-"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Gem is not liable and cannot help in any way.";
+"onboarding.accept_terms.item1.message" = "Tôi hiểu rằng tôi là người duy nhất chịu trách nhiệm về tính bảo mật và sao lưu ví của mình, không phải Wraith.";
+"onboarding.accept_terms.item2.message" = "Tôi hiểu rằng Gem không phải là ngân hàng hay sàn giao dịch và việc sử dụng Wraith cho mục đích bất hợp pháp là hoàn toàn bị nghiêm cấm.";
+"onboarding.accept_terms.item3.message" = "I understand that if I ever lose access to my wallets, Wraith is not liable and cannot help in any way.";
 "onboarding.accept_terms.continue" = "Agree and Continue";
 "errors.required" = "%@ là bắt buộc";
 "asset.verification.unverified" = "Chưa được xác minh";
@@ -415,8 +415,8 @@
 "info.asset_status.suspicious.description" = "Mã thông báo đáng ngờ hoặc thư rác được xác định là lừa đảo tiềm ẩn hoặc tài sản có hại. Chúng có thể xuất hiện trong ví của bạn do airdrop, chuyển khoản hoặc nhập thủ công.";
 "errors.insufficient_funds" = "Không đủ tiền";
 "info.insufficient_network_fee_balance.title" = "%@ bắt buộc";
-"info.insufficient_network_fee_balance.description" = "Giao dịch này yêu cầu %@ để trang trải phí mạng đã trả cho %@ thợ mỏ, không phải Gem WalletHãy đảm bảo bạn có đủ %@.";
-"brand_name" = "Gem Wallet";
+"info.insufficient_network_fee_balance.description" = "Giao dịch này yêu cầu %@ để trang trải phí mạng đã trả cho %@ thợ mỏ, không phải Wraith WalletHãy đảm bảo bạn có đủ %@.";
+"brand_name" = "Wraith Wallet";
 "info.insufficient_balance.title" = "Số dư không đủ";
 "info.insufficient_balance.description" = "Bạn không có đủ %@ để hoàn tất giao dịch này. Vui lòng nạp tiền, nhận hoặc đổi trong ví của bạn và thử lại.";
 "info.account_minimum_balance.title" = "Số dư tối thiểu";
@@ -524,7 +524,7 @@
 "nft.report.reason.copyright" = "Bản quyền";
 "nft.report.report_button_title" = "Báo cáo";
 "rewards.title" = "Phần thưởng";
-"rewards.share_text" = "Tham gia Gem Wallet Sử dụng liên kết giới thiệu của tôi và nhận phần thưởng: %@";
+"rewards.share_text" = "Tham gia Wraith Wallet Sử dụng liên kết giới thiệu của tôi và nhận phần thưởng: %@";
 "rewards.my_referral_code" = "Mã giới thiệu của tôi";
 "rewards.invite_friends.title" = "Mời bạn bè";
 "rewards.invite_friends.description" = "Kiếm %@ Điểm thưởng cho mỗi người bạn tham gia.";

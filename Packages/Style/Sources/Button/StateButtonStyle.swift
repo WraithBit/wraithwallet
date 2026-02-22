@@ -7,6 +7,7 @@ public struct StateButtonStyle: ButtonStyle {
     private let variant: ButtonType
     private let palette: ButtonStylePalette
 
+    // note: keeping 'paletee' to match existing call sites in the repo
     public init(_ variant: ButtonType, palettee: ButtonStylePalette) {
         self.variant = variant
         self.palette = palettee
@@ -29,34 +30,43 @@ public struct StateButtonStyle: ButtonStyle {
             }
         }
     }
-    
+
     @ViewBuilder
     private func adoptiveShape(configuration: Configuration) -> some View {
-        if #available(iOS 26, *) {
-            DefaultGlassEffectShape()
-                .fill(background(configuration: configuration))
-                .frame(maxHeight: Self.maxHeight)
-                .glassEffect(.regular.interactive(!variant.isDisabled))
-        } else {
-            RoundedRectangle(cornerRadius: Sizing.space12)
-                .fill(background(configuration: configuration))
-                .frame(maxHeight: Self.maxHeight)
-        }
+        let fill = background(configuration: configuration)
+
+        // Rounded rectangle base fill
+        RoundedRectangle(cornerRadius: Sizing.space12, style: .continuous)
+            .fill(fill)
+            .frame(maxHeight: Self.maxHeight)
+            // Material “glass” layer behind the fill to emulate the previous effect
+            .background(
+                RoundedRectangle(cornerRadius: Sizing.space12, style: .continuous)
+                    .fill(.ultraThinMaterial)
+            )
+            // Dim slightly when disabled, similar to “non-interactive glass”
+            .opacity(variant.isDisabled ? 0.92 : 1.0)
     }
 
     private func background(configuration: Configuration) -> Color {
         switch variant.state {
-        case .normal: configuration.isPressed ? palette.backgroundPressed : palette.background
-        case .loading(let show): show ? palette.background : palette.backgroundDisabled
-        case .disabled: palette.backgroundDisabled
+        case .normal:
+            configuration.isPressed ? palette.backgroundPressed : palette.background
+        case .loading(let show):
+            show ? palette.background : palette.backgroundDisabled
+        case .disabled:
+            palette.backgroundDisabled
         }
     }
 
     private func foreground(configuration: Configuration) -> Color {
         switch variant.state {
-        case .normal: configuration.isPressed ? palette.foregroundPressed : palette.foreground
-        case .loading(let show): show ? palette.foreground : palette.foreground.opacity(0.65)
-        case .disabled: palette.foreground
+        case .normal:
+            configuration.isPressed ? palette.foregroundPressed : palette.foreground
+        case .loading(let show):
+            show ? palette.foreground : palette.foreground.opacity(0.65)
+        case .disabled:
+            palette.foreground
         }
     }
 }
