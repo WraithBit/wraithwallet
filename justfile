@@ -151,4 +151,3 @@ generate-stone:
 bump TYPE="":
     @sh ./scripts/bump.sh {{TYPE}}
 
-mod core
