@@ -16,18 +16,12 @@ jobs:
     runs-on: macos-26
 
     steps:
-      - name: Checkout (with submodules)
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
-          submodules: recursive
+          submodules: true
           fetch-depth: 0
-
-      - name: Ensure submodules are present
-        run: |
-          git submodule sync --recursive
-          git submodule update --init --recursive
-          test -d core || (echo "core/ missing after submodule update" && exit 1)
 
       - name: Show Xcode and simulators
         run: |
@@ -50,22 +44,46 @@ jobs:
           brew update
           brew install just xcbeautify
 
-      - name: Create Secrets.plist for CI
+      - name: Create non-secret plists required for CI build
+        shell: bash
         run: |
-          if [ ! -f Secrets.plist ]; then
-            if [ -f Secrets.example.plist ]; then
-              cp Secrets.example.plist Secrets.plist
+          set -euo pipefail
+
+          # Secrets.plist (your app expects this file to exist)
+          if [ ! -f "Secrets.plist" ]; then
+            if [ -f "Secrets.example.plist" ]; then
+              cp "Secrets.example.plist" "Secrets.plist"
             else
-              echo "Secrets.example.plist not found; creating empty Secrets.plist for CI"
-              cat > Secrets.plist <<'EOF'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict></dict>
-          </plist>
-          EOF
+              cat > "Secrets.plist" <<'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+</dict>
+</plist>
+EOF
             fi
           fi
 
-      - name: Unit tests
+          # GoogleService-Info.plist (Firebase). Do NOT commit the real one.
+          # CI only needs a file present to satisfy the Copy Files build phase.
+          if [ ! -f "GoogleService-Info.plist" ]; then
+            cat > "GoogleService-Info.plist" <<'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>IS_CI_STUB</key>
+  <true/>
+</dict>
+</plist>
+EOF
+          fi
+
+      - name: Build Core
+        run: |
+          just install-toolchains
+          just generate-stone
+
+      - name: Build (CI-safe)
         run: just test-all
