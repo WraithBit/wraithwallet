@@ -1,6 +1,7 @@
 name: Unit Tests
 
 on:
+  workflow_dispatch:
   push:
     branches: ["main"]
   pull_request:
@@ -23,8 +24,17 @@ jobs:
           submodules: true
           fetch-depth: 0
 
-      - name: Show Xcode and simulators
+      - name: Ensure submodules are initialised
+        shell: bash
         run: |
+          set -e
+          git submodule sync --recursive
+          git submodule update --init --recursive
+
+      - name: Show Xcode and simulators
+        shell: bash
+        run: |
+          set -e
           xcodebuild -version
           xcrun simctl list devices
 
@@ -40,16 +50,17 @@ jobs:
             ${{ runner.os }}-spm-
 
       - name: Install tooling
+        shell: bash
         run: |
-          brew update
+          set -e
           brew install just xcbeautify
 
       - name: Create non-secret plists required for CI build
         shell: bash
         run: |
-          set -euo pipefail
+          set -e
 
-          # Secrets.plist (your app expects this file to exist)
+          # Secrets.plist (required by the app at build time)
           if [ ! -f "Secrets.plist" ]; then
             if [ -f "Secrets.example.plist" ]; then
               cp "Secrets.example.plist" "Secrets.plist"
@@ -65,8 +76,7 @@ EOF
             fi
           fi
 
-          # GoogleService-Info.plist (Firebase). Do NOT commit the real one.
-          # CI only needs a file present to satisfy the Copy Files build phase.
+          # GoogleService-Info.plist (Firebase) - CI stub only, never commit the real one
           if [ ! -f "GoogleService-Info.plist" ]; then
             cat > "GoogleService-Info.plist" <<'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
@@ -80,10 +90,18 @@ EOF
 EOF
           fi
 
+          echo "=== CI stubs present ==="
+          ls -la Secrets.plist GoogleService-Info.plist
+
       - name: Build Core
+        shell: bash
         run: |
+          set -e
           just install-toolchains
           just generate-stone
 
-      - name: Build (CI-safe)
-        run: just test-all
+      - name: Unit tests
+        shell: bash
+        run: |
+          set -e
+          just test-all
