@@ -16,12 +16,18 @@ jobs:
     runs-on: macos-26
 
     steps:
-      - name: Checkout
+      - name: Checkout (with submodules)
         uses: actions/checkout@v4
         with:
           lfs: true
-          submodules: false
+          submodules: recursive
           fetch-depth: 0
+
+      - name: Ensure submodules are present
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
+          test -d core || (echo "core/ missing after submodule update" && exit 1)
 
       - name: Show Xcode and simulators
         run: |
