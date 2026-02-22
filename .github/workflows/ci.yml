@@ -26,7 +26,8 @@ jobs:
       - name: Show Xcode and simulators
         run: |
           xcodebuild -version
-          xcrun simctl list devices
+          xcrun simctl list devices available || true
+          xcrun simctl list devices || true
 
       - name: Cache Swift Package Manager
         uses: actions/cache@v4
@@ -39,8 +40,32 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-
 
-      - name: Install just
-        run: brew install just
+      - name: Install tooling
+        run: |
+          brew update
+          brew install just xcbeautify
+
+      # Ensure open-source / CI builds do not require committed secrets.
+      # Your project expects Secrets.plist at repo root for some targets (eg widgets).
+      - name: Create Secrets.plist for CI
+        run: |
+          if [ -f Secrets.plist ]; then
+            echo "Secrets.plist already exists"
+          elif [ -f Secrets.example.plist ]; then
+            cp Secrets.example.plist Secrets.plist
+            echo "Created Secrets.plist from Secrets.example.plist"
+          else
+            cat > Secrets.plist <<'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <!-- Non-secret placeholders used for CI and open-source builds -->
+          </dict>
+          </plist>
+          EOF
+            echo "Created minimal Secrets.plist"
+          fi
 
       - name: Unit tests
         run: just test-all
