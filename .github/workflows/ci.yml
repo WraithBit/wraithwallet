@@ -25,16 +25,12 @@ jobs:
           fetch-depth: 0
 
       - name: Ensure submodules are initialised
-        shell: bash
         run: |
-          set -e
           git submodule sync --recursive
           git submodule update --init --recursive
 
       - name: Show Xcode and simulators
-        shell: bash
         run: |
-          set -e
           xcodebuild -version
           xcrun simctl list devices
 
@@ -50,33 +46,27 @@ jobs:
             ${{ runner.os }}-spm-
 
       - name: Install tooling
-        shell: bash
-        run: |
-          set -e
-          brew install just xcbeautify
+        run: brew install just xcbeautify
 
-      - name: Create non-secret plists required for CI build
-        shell: bash
+      - name: Create CI stub plists
         run: |
-          set -e
-
           if [ ! -f "Secrets.plist" ]; then
             if [ -f "Secrets.example.plist" ]; then
-              cp "Secrets.example.plist" "Secrets.plist"
+              cp Secrets.example.plist Secrets.plist
             else
-              cat > "Secrets.plist" <<'EOF'
+              cat > Secrets.plist <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 </dict>
 </plist>
-EOF
+PLIST
             fi
           fi
 
           if [ ! -f "GoogleService-Info.plist" ]; then
-            cat > "GoogleService-Info.plist" <<'EOF'
+            cat > GoogleService-Info.plist <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -85,21 +75,15 @@ EOF
   <true/>
 </dict>
 </plist>
-EOF
+PLIST
           fi
 
-          echo "=== CI stubs present ==="
           ls -la Secrets.plist GoogleService-Info.plist
 
       - name: Build Core
-        shell: bash
         run: |
-          set -e
           just install-toolchains
           just generate-stone
 
       - name: Unit tests
-        shell: bash
-        run: |
-          set -e
-          just test-all
+        run: just test-all
