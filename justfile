@@ -46,7 +46,7 @@ spm-resolve-all:
 
 build:
     @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
-    -scheme Gem \
+    -scheme "Wraith Wallet" \
     ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \
     -derivedDataPath build/DerivedData \
@@ -81,7 +81,7 @@ show-simulator:
 
 test-all: show-simulator
     @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
-    -scheme Gem \
+    -scheme "Wraith Wallet" \
     ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \
     -derivedDataPath build/DerivedData \
@@ -108,7 +108,7 @@ reset-simulator NAME=SIMULATOR_NAME:
 
 test TARGET: show-simulator
     @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
-    -scheme Gem \
+    -scheme "Wraith Wallet" \
     ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \
     -derivedDataPath build/DerivedData \
