@@ -14,7 +14,7 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Gem.xcodeproj",
+        "containerPath" : "container:Wraith.xcodeproj",
         "identifier" : "D83096AB2D5D4F1E00FFEE3E",
         "name" : "GemUITests"
       }

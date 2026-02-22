@@ -45,7 +45,7 @@ spm-resolve-all:
     sh scripts/spm-resolve-all.sh
 
 build:
-    @set -o pipefail && xcodebuild -project Gem.xcodeproj \
+    @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
     -scheme Gem \
     ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \
@@ -64,7 +64,7 @@ clean:
     @echo "Build cache cleaned"
 
 build-package PACKAGE:
-    @set -o pipefail && xcodebuild -project Gem.xcodeproj \
+    @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
     -scheme {{PACKAGE}} \
     ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \
@@ -80,7 +80,7 @@ show-simulator:
     @xcrun simctl list devices | grep "iPhone" | head -5 || true
 
 test-all: show-simulator
-    @set -o pipefail && xcodebuild -project Gem.xcodeproj \
+    @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
     -scheme Gem \
     ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \
@@ -91,7 +91,7 @@ test-all: show-simulator
     test | xcbeautify {{XCBEAUTIFY_ARGS}}
 
 test-ui: reset-simulator
-    @set -o pipefail && xcodebuild -project Gem.xcodeproj \
+    @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
     -scheme GemUITests \
     -testPlan ui_tests \
     ONLY_ACTIVE_ARCH=YES \
@@ -107,7 +107,7 @@ reset-simulator NAME=SIMULATOR_NAME:
     @xcrun simctl boot "{{NAME}}" 2>/dev/null || true
 
 test TARGET: show-simulator
-    @set -o pipefail && xcodebuild -project Gem.xcodeproj \
+    @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
     -scheme Gem \
     ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \

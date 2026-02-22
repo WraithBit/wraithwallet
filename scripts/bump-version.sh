@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-file="Gem.xcodeproj/project.pbxproj"
+file="Wraith.xcodeproj/project.pbxproj"
 bump=${1:-patch} # default to patch
 
 version=$(grep -oE "MARKETING_VERSION = [0-9]+\.[0-9]+\.[0-9]+;" "$file" | head -n1 | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")

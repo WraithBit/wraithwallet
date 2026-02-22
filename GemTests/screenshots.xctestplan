@@ -329,7 +329,7 @@
       }
     ],
     "targetForVariableExpansion" : {
-      "containerPath" : "container:Gem.xcodeproj",
+      "containerPath" : "container:Wraith.xcodeproj",
       "identifier" : "D8A1F8722B17F21E00B15F54",
       "name" : "Screenshots"
     },
@@ -339,7 +339,7 @@
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Gem.xcodeproj",
+        "containerPath" : "container:Wraith.xcodeproj",
         "identifier" : "D8A1F8722B17F21E00B15F54",
         "name" : "Screenshots"
       }

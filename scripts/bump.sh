@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-file="Gem.xcodeproj/project.pbxproj"
+file="Wraith.xcodeproj/project.pbxproj"
 
 # Pull latest changes first
 git pull

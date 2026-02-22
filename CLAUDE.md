@@ -96,7 +96,7 @@ just uml-app
 - **If swift build fails**: Use xcodebuild directly instead:
   ```bash
   # For full project build
-  xcodebuild -project Gem.xcodeproj -scheme Gem -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 17" build
+  xcodebuild -project Wraith.xcodeproj -scheme Gem -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 17" build
   ```
 
 ## Key Dependencies
