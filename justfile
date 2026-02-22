@@ -90,14 +90,18 @@ test-all: show-simulator
     -jobs {{BUILD_THREADS}} \
     test | xcbeautify {{XCBEAUTIFY_ARGS}}
 
+# UI tests are intentionally disabled on CI.
+# Run locally, or trigger the UI Tests workflow via workflow_dispatch when needed.
 test-ui: reset-simulator
+    @if [ "${CI:-}" = "true" ]; then \
+        echo "UI tests are currently disabled on CI. Run locally or via workflow_dispatch when needed."; \
+        exit 0; \
+    fi
     @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
     -scheme GemUITests \
     -testPlan ui_tests \
     ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \
-    -allowProvisioningUpdates \
-    -allowProvisioningDeviceRegistration \
     test | xcbeautify {{XCBEAUTIFY_ARGS}}
 
 reset-simulator NAME=SIMULATOR_NAME:
