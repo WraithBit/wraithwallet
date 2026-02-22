@@ -1,7 +1,7 @@
 name: Unit Tests
 
-"on":
-  workflow_dispatch: {}
+on:
+  workflow_dispatch:
   push:
     branches: ["main"]
   pull_request:
@@ -25,12 +25,16 @@ jobs:
           fetch-depth: 0
 
       - name: Ensure submodules are initialised
+        shell: bash
         run: |
+          set -euo pipefail
           git submodule sync --recursive
           git submodule update --init --recursive
 
       - name: Show Xcode and simulators
+        shell: bash
         run: |
+          set -euo pipefail
           xcodebuild -version
           xcrun simctl list devices
 
@@ -46,44 +50,46 @@ jobs:
             ${{ runner.os }}-spm-
 
       - name: Install tooling
-        run: brew install just xcbeautify
+        shell: bash
+        run: |
+          set -euo pipefail
+          brew install just xcbeautify
 
       - name: Create CI stub plists
+        shell: bash
         run: |
+          set -euo pipefail
+
+          # Secrets.plist
           if [ ! -f "Secrets.plist" ]; then
             if [ -f "Secrets.example.plist" ]; then
-              cp Secrets.example.plist Secrets.plist
+              cp "Secrets.example.plist" "Secrets.plist"
             else
-              cat > Secrets.plist <<PLIST
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-</dict>
-</plist>
-PLIST
+              /usr/libexec/PlistBuddy -c "Clear dict" "Secrets.plist" || true
+              /usr/libexec/PlistBuddy -c "Add :IS_CI_STUB bool true" "Secrets.plist"
             fi
           fi
 
+          # GoogleService-Info.plist (Firebase) - CI stub only
           if [ ! -f "GoogleService-Info.plist" ]; then
-            cat > GoogleService-Info.plist <<PLIST
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>IS_CI_STUB</key>
-  <true/>
-</dict>
-</plist>
-PLIST
+            /usr/libexec/PlistBuddy -c "Clear dict" "GoogleService-Info.plist" || true
+            /usr/libexec/PlistBuddy -c "Add :IS_CI_STUB bool true" "GoogleService-Info.plist"
           fi
 
+          echo "=== CI stub plists present ==="
           ls -la Secrets.plist GoogleService-Info.plist
+          /usr/libexec/PlistBuddy -c "Print" Secrets.plist || true
+          /usr/libexec/PlistBuddy -c "Print" GoogleService-Info.plist || true
 
       - name: Build Core
+        shell: bash
         run: |
+          set -euo pipefail
           just install-toolchains
           just generate-stone
 
       - name: Unit tests
-        run: just test-all
+        shell: bash
+        run: |
+          set -euo pipefail
+          just test-all
