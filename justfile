@@ -95,6 +95,7 @@ test-all: show-simulator
     -derivedDataPath build/DerivedData \
     -parallel-testing-enabled YES \
     -jobs {{BUILD_THREADS}} \
+    -skip-testing:SupportTests \
     test | xcbeautify {{XCBEAUTIFY_ARGS}}
 
 test-ui: reset-simulator
@@ -121,12 +122,13 @@ test TARGET: show-simulator
     -derivedDataPath build/DerivedData \
     -only-testing {{TARGET}} \
     -parallel-testing-enabled YES \
+    -parallelizeTargets \
     -jobs {{BUILD_THREADS}} \
     test | xcbeautify {{XCBEAUTIFY_ARGS}}
 
 mobsfscan:
     @command -v uv >/dev/null || { \
-        echo "uv is not installed. Install it via '\''curl -LsSf https://astral.sh/uv/install.sh | sh'\''."; \
+        echo "uv is not installed. Install it via 'curl -LsSf https://astral.sh/uv/install.sh | sh'."; \
         exit 1; }
     uv tool run mobsfscan -- --type ios --config .mobsf --exit-warning
 
