@@ -1,90 +1,32 @@
-# 💎 Gem Wallet - iOS
+# Wraith Wallet - iOS
 
-[![Unit Tests](https://github.com/gemwalletcom/gem-ios/actions/workflows/ci.yml/badge.svg)](https://github.com/gemwalletcom/gem-ios/actions/workflows/ci.yml)
-[![License](https://badgen.net/github/license/gemwalletcom/gem-android)](https://github.com/gemwalletcom/gem-android/blob/main/LICENSE)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/gemwalletcom/gem-ios)
-[![Gem Wallet Discord](https://img.shields.io/discord/974531300394434630?style=plastic)](https://discord.gg/aWkq5sj7SY)
-[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/GemWalletApp)](https://x.com/GemWalletApp)
-[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=flat&logo=telegram&logoColor=white)](https://t.me/gemwallet_developers)
+Wraith Wallet is a self-custody crypto wallet for iOS, built with SwiftUI.
 
-<b>Gem Wallet</b> is a powerful and secure mobile application designed for iOS and [Android](https://github.com/gemwalletcom/gem-android). It provides users with a seamless and intuitive experience to manage their digital assets and cryptocurrencies.
+This project is a fork of the Gem Wallet iOS codebase, rebranded and extended.
 
-The app is developed using SwiftUI. The codebase also includes a [Core](https://github.com/gemwalletcom/core) library implemented in Rust, providing efficient and secure cryptographic operations for enhanced data protection.
+## Features
 
-📲️ [iOS available on the App Store.](https://apps.apple.com/app/apple-store/id6448712670?ct=github&mt=8)
+- Self-custody wallet (you control your keys)
+- Multi-chain support (varies by build configuration)
+- Swaps
+- WalletConnect
+- Token discovery (trending + new listings)
+- Fiat on-ramp/off-ramp (where supported)
 
-🤖 [Android available on the Google Play Store.](https://play.google.com/store/apps/details?id=com.gemwallet.android&utm_campaign=github&utm_source=referral&utm_medium=github)
+## Getting started
 
-## ✨ Features
+1. Install Xcode
+2. Clone the repo
+3. Open `Wraith.xcodeproj` in Xcode
+4. Build and run on a simulator or device
 
-- 👨‍👩‍👧‍👦 **Open Source & Community Owned** with web3 ethos.
-- 🗝️ **Self-Custody** Exclusive ownership and access to funds.
-- 🔑 **Secure** and **Privacy** preserving wallet.
-- 🔗 **Multi-Chain Support:** Supports Ethereum, Binance Smart Chain, Polygon, Avalanche, Solana, and more.
-- 🔄 **Swaps:** Exchange cryptocurrencies quickly and easily.
-- 📈 **Staking:** Earn rewards by staking assets.
-- 🌐 **WalletConnect:** Secure communication with decentralized applications (dApps).
-- 🌍 **Fiat On/Off Ramp:** Easily convert between cryptocurrencies and traditional currencies.
-- 🗃️ **Backup and Recovery:** Simple backup and recovery options.
-- 📈 **Real-Time Market Data:** Integrated with real-time price tracking and market data.
-- 🔄 **Instant Transactions:** Fast and efficient transactions with low fees.
-- 🔔 **Customizable Notifications:** Set alerts for transactions, price changes, and important events.
-- 🛡️ **Advanced Security:** Encryption and secure key management.
+> If you use local secrets (e.g. API keys), keep them out of Git and follow the `.gitignore` rules for `Secrets.plist` and `GoogleService-Info.plist`.
 
-<img src="https://assets.gemwallet.com/screenshots/github_preview.png" />
+## Contributing
 
-## 🏄‍♂️ Contributing
+- Issues: https://github.com/WraithBit/wraithwallet/issues
+- Pull requests welcome
 
-- Look in to our [Github Issues](https://github.com/gemwalletcom/gem-ios/issues)
-- See progress on our [Github Project Board](https://github.com/orgs/gemwalletcom/projects/2)
-- Public [Roadmap](https://github.com/orgs/gemwalletcom/projects/4)
+## Licence
 
-See our [Contributing Guidelines](./CONTRIBUTING.md).
-
-## 🥰 Community
-
-- Install the app [Gem Wallet](https://gemwallet.com)
-- Join our [Discord](https://discord.gg/aWkq5sj7SY)
-- Follow on [Twitter](https://twitter.com/GemWalletApp) or join [Telegram](https://t.me/GemWallet)
-
-## 🙋 Getting Help
-
-- Join the [Telegram](https://t.me/gemwallet_developers) to get help, or
-- Open a [discussion](https://github.com/gemwalletcom/gem-ios/discussions/new) with your question, or
-- Open an issue with [the bug](https://github.com/gemwalletcom/gem-ios/issues/new)
-
-If you want to contribute, you can use our [developers telegram](https://t.me/gemwallet_developers) to chat with us about further development!
-
-## 🚀 Getting Started
-
-### iOS Development
-
-> [!NOTE]
-> Gem iOS needs [Apple silicon Mac](https://support.apple.com/en-us/116943) to build by default.
-
-1. Setup [Xcode](https://developer.apple.com/xcode)
-2. Clone the repo `git clone https://github.com/gemwalletcom/gem-ios.git --recursive`
-3. Run `just bootstrap` to install all necessary tools. Make sure you have `just` installed `brew install just`. 
-
-If you're using a legacy Intel Mac, you need to pull latest `core` submodule and run `just generate-stone` to build `x86_64` arch Gemstone, the core library used by Gem iOS.
-
-## 🔐 Security Scanning
-
-We run [MobSF mobsfscan](https://github.com/MobSF/mobsfscan) to catch insecure patterns in Swift and Objective-C code.
-
-- **Local usage**: Install [`uv`](https://docs.astral.sh/uv/getting-started/installation/) and run `uv tool install mobsfscan` once. After that, `just mobsfscan` (internally `uv tool run mobsfscan -- --type ios --config .mobsf --exit-warning`) scans the iOS source tree with the repo-wide `.mobsf` configuration and fails when it encounters `WARNING` or `ERROR` level findings.
-- **CI enforcement**: `.github/workflows/mobsfscan.yml` installs mobsfscan on every push/PR to `main`, uploads a SARIF report to GitHub code scanning, and fails the workflow when findings remain.
-
-Suppress individual findings only when you fully understand the risk—either update the code or add a `// mobsf-ignore: rule_id` inline comment with context.
-
-## 👨‍👧‍👦 Contributors
-
-We love contributors! Feel free to contribute to this project but please read the [Contributing Guidelines](CONTRIBUTING.md) first!
-
-## 🌍 Localization
-
-Join us in making our app accessible worldwide! Contribute to localization efforts by visiting our [Lokalise project](https://app.lokalise.com/public/94865410644ee707546334.60736699/)
-
-## ⚖️ License
-
-Gem Wallet is open-sourced software licensed under the © [GPL-3.0](LICENSE).
+Wraith Wallet is open source software licensed under the GNU GPL v3.0. See [LICENSE](LICENSE).
