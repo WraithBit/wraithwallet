@@ -16,39 +16,33 @@ jobs:
     runs-on: macos-26
 
     steps:
-      - name: Select Xcode
-        run: |
-          xcrun simctl list devices
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # We ship the xcframework binaries in-repo, so ensure LFS objects are pulled.
           lfs: true
-          # Keep submodules enabled in case other parts of the repo still rely on them.
-          submodules: true
+          submodules: false
+          fetch-depth: 0
 
       - name: Cache Swift Package Manager
         uses: actions/cache@v4
         with:
           path: |
+            ~/Library/Caches/org.swift.swiftpm
             ~/.swiftpm
             .build
           key: ${{ runner.os }}-spm-${{ hashFiles('Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm-
 
-      # NOTE:
-      # This fork ships prebuilt GemstoneFFI.xcframework binaries already in the repo (via Git LFS),
-      # so we do NOT build the Rust core or regenerate bindings in CI.
-      # That means we can remove:
-      # - Cargo caches
-      # - sccache
-      # - toolchain installs
-      # - `just generate-stone`
+      - name: Select Xcode
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices
 
-      - name: Install just
-        run: brew install just
-
-      - name: Unit Tests
-        run: just test-all
+      - name: Build and test (Unit Tests)
+        run: |
+          xcodebuild \
+            -project Wraith.xcodeproj \
+            -scheme Wraith \
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
+            clean test
