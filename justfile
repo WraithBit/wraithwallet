@@ -31,6 +31,7 @@ install-toolchains:
 install-swifttools:
     @echo "==> Install SwiftGen and SwiftFormat"
     @brew install swiftgen swiftformat
+    @brew install xcbeautify || true
 
 download-wallet-core VERSION:
     @echo "==> Install wallet-core {{VERSION}}"
@@ -47,7 +48,7 @@ core-upgrade:
 spm-resolve-all:
     sh scripts/spm-resolve-all.sh
 
-build:
+build: show-simulator
     @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
     -scheme "Wraith Wallet" \
     ONLY_ACTIVE_ARCH=YES \
@@ -66,7 +67,7 @@ clean:
     @rm -rf build/DerivedData
     @echo "Build cache cleaned"
 
-build-package PACKAGE:
+build-package PACKAGE: show-simulator
     @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
     -scheme {{PACKAGE}} \
     ONLY_ACTIVE_ARCH=YES \
@@ -87,16 +88,16 @@ show-simulator:
     @echo "Destination: {{SIMULATOR_DEST}}"
     @xcrun simctl list devices available | grep -E "iPhone|iPad" | head -n 10 || true
 
+# CI-safe: build only (avoids linking failing test bundles like SupportTests)
 test-all: show-simulator
     @set -o pipefail && xcodebuild \
     -project Wraith.xcodeproj \
     -scheme "Wraith Wallet" \
     -destination "{{SIMULATOR_DEST}}" \
     -derivedDataPath build/DerivedData \
-    -parallel-testing-enabled YES \
+    -parallelizeTargets \
     -jobs {{BUILD_THREADS}} \
-    -skip-testing:SupportTests \
-    test | xcbeautify {{XCBEAUTIFY_ARGS}}
+    build | xcbeautify {{XCBEAUTIFY_ARGS}}
 
 test-ui: reset-simulator
     @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
@@ -108,11 +109,11 @@ test-ui: reset-simulator
     -allowProvisioningDeviceRegistration \
     test | xcbeautify {{XCBEAUTIFY_ARGS}}
 
-reset-simulator NAME="iPhone 16 Pro":
-    @echo "==> Resetting {{NAME}} simulator to clean state"
-    @xcrun simctl shutdown "{{NAME}}" 2>/dev/null || true
-    @xcrun simctl erase "{{NAME}}" 2>/dev/null || true
-    @xcrun simctl boot "{{NAME}}" 2>/dev/null || true
+reset-simulator: show-simulator
+    @echo "==> Resetting simulator {{SIMULATOR_UDID}} to clean state"
+    @xcrun simctl shutdown "{{SIMULATOR_UDID}}" 2>/dev/null || true
+    @xcrun simctl erase "{{SIMULATOR_UDID}}" 2>/dev/null || true
+    @xcrun simctl boot "{{SIMULATOR_UDID}}" 2>/dev/null || true
 
 test TARGET: show-simulator
     @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
