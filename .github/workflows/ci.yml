@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   unit_test:
-    name: Build and Test iPhone simulator
+    name: Build and test iPhone simulator
     runs-on: macos-26
 
     steps:
@@ -22,6 +22,11 @@ jobs:
           lfs: true
           submodules: false
           fetch-depth: 0
+
+      - name: Show Xcode and simulators
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices
 
       - name: Cache Swift Package Manager
         uses: actions/cache@v4
@@ -34,15 +39,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-
 
-      - name: Select Xcode
-        run: |
-          xcodebuild -version
-          xcrun simctl list devices
+      - name: Install just
+        run: brew install just
 
-      - name: Build and test (Unit Tests)
-        run: |
-          xcodebuild \
-            -project Wraith.xcodeproj \
-            -scheme Wraith \
-            -destination 'platform=iOS Simulator,name=iPhone 17' \
-            clean test
+      - name: Unit tests
+        run: just test-all
