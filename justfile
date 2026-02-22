@@ -1,7 +1,10 @@
 XCBEAUTIFY_ARGS := "--quieter --is-ci"
 BUILD_THREADS := `sysctl -n hw.ncpu`
-SIMULATOR_NAME := "iPhone 17"
-SIMULATOR_DEST := "platform=iOS Simulator,name=" + SIMULATOR_NAME
+
+# Use a deterministic simulator destination that works across machines and CI.
+# Picks the first available simulator UDID from `simctl list devices available`.
+SIMULATOR_UDID := `xcrun simctl list devices available | sed -n 's/.*(\([0-9A-Fa-f-]\{36\}\)).*/\1/p' | head -n 1`
+SIMULATOR_DEST := "platform=iOS Simulator,id=" + SIMULATOR_UDID
 
 xcbeautify:
     @xcbeautify {{XCBEAUTIFY_ARGS}}
@@ -76,35 +79,35 @@ build-package PACKAGE:
     build | xcbeautify {{XCBEAUTIFY_ARGS}}
 
 show-simulator:
+    @if [ -z "{{SIMULATOR_UDID}}" ]; then \
+        echo "No available iOS Simulator devices found."; \
+        exit 1; \
+    fi
+    @echo "Picked simulator UDID: {{SIMULATOR_UDID}}"
     @echo "Destination: {{SIMULATOR_DEST}}"
-    @xcrun simctl list devices | grep "iPhone" | head -5 || true
+    @xcrun simctl list devices available | grep -E "iPhone|iPad" | head -n 10 || true
 
 test-all: show-simulator
-    @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
+    @set -o pipefail && xcodebuild \
+    -project Wraith.xcodeproj \
     -scheme "Wraith Wallet" \
-    ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \
     -derivedDataPath build/DerivedData \
     -parallel-testing-enabled YES \
-    -parallelizeTargets \
     -jobs {{BUILD_THREADS}} \
     test | xcbeautify {{XCBEAUTIFY_ARGS}}
 
-# UI tests are intentionally disabled on CI.
-# Run locally, or trigger the UI Tests workflow via workflow_dispatch when needed.
 test-ui: reset-simulator
-    @if [ "${CI:-}" = "true" ]; then \
-        echo "UI tests are currently disabled on CI. Run locally or via workflow_dispatch when needed."; \
-        exit 0; \
-    fi
     @set -o pipefail && xcodebuild -project Wraith.xcodeproj \
     -scheme GemUITests \
     -testPlan ui_tests \
     ONLY_ACTIVE_ARCH=YES \
     -destination "{{SIMULATOR_DEST}}" \
+    -allowProvisioningUpdates \
+    -allowProvisioningDeviceRegistration \
     test | xcbeautify {{XCBEAUTIFY_ARGS}}
 
-reset-simulator NAME=SIMULATOR_NAME:
+reset-simulator NAME="iPhone 16 Pro":
     @echo "==> Resetting {{NAME}} simulator to clean state"
     @xcrun simctl shutdown "{{NAME}}" 2>/dev/null || true
     @xcrun simctl erase "{{NAME}}" 2>/dev/null || true
@@ -118,13 +121,12 @@ test TARGET: show-simulator
     -derivedDataPath build/DerivedData \
     -only-testing {{TARGET}} \
     -parallel-testing-enabled YES \
-    -parallelizeTargets \
     -jobs {{BUILD_THREADS}} \
     test | xcbeautify {{XCBEAUTIFY_ARGS}}
 
 mobsfscan:
     @command -v uv >/dev/null || { \
-        echo "uv is not installed. Install it via 'curl -LsSf https://astral.sh/uv/install.sh | sh'."; \
+        echo "uv is not installed. Install it via '\''curl -LsSf https://astral.sh/uv/install.sh | sh'\''."; \
         exit 1; }
     uv tool run mobsfscan -- --type ios --config .mobsf --exit-warning
 
@@ -151,3 +153,4 @@ generate-stone:
 bump TYPE="":
     @sh ./scripts/bump.sh {{TYPE}}
 
+mod core

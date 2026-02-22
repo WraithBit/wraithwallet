@@ -16,6 +16,13 @@ jobs:
     runs-on: macos-26
 
     steps:
+
+      - name: Create Secrets.plist for CI
+        run: |
+          if [ ! -f Secrets.plist ]; then
+            cp Secrets.example.plist Secrets.plist
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
