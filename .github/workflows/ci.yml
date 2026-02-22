@@ -3,16 +3,12 @@ name: Unit Tests
 on:
   push:
     branches: ["main"]
-  pull_request: 
+  pull_request:
     branches: ["main"]
 
 concurrency:
   group: unit-tests-${{ github.ref }}
   cancel-in-progress: false
-
-env:
-  SCCACHE_GHA_ENABLED: "true"
-  RUSTC_WRAPPER: "sccache"
 
 jobs:
   unit_test:
@@ -23,30 +19,14 @@ jobs:
       - name: Select Xcode
         run: |
           xcrun simctl list devices
-        
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          # We ship the xcframework binaries in-repo, so ensure LFS objects are pulled.
+          lfs: true
+          # Keep submodules enabled in case other parts of the repo still rely on them.
           submodules: true
-
-      - name: Cache Cargo Dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ runner.os }}-cargo-deps-${{ hashFiles('core/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-deps-
-        
-      - name: Cache Cargo Target
-        uses: actions/cache@v4
-        with:
-          path: |
-            core/target
-          key: ${{ runner.os }}-cargo-deps-${{ hashFiles('core/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-deps-
 
       - name: Cache Swift Package Manager
         uses: actions/cache@v4
@@ -58,17 +38,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-
 
-      - name: Run sccache-cache
-        uses: mozilla-actions/sccache-action@v0.0.8
-    
+      # NOTE:
+      # This fork ships prebuilt GemstoneFFI.xcframework binaries already in the repo (via Git LFS),
+      # so we do NOT build the Rust core or regenerate bindings in CI.
+      # That means we can remove:
+      # - Cargo caches
+      # - sccache
+      # - toolchain installs
+      # - `just generate-stone`
+
       - name: Install just
         run: brew install just
-
-      - name: Install dependencies
-        run: just install-toolchains
-
-      - name: Build Core
-        run: just generate-stone
 
       - name: Unit Tests
         run: just test-all
