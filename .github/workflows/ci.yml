@@ -1,7 +1,7 @@
 name: Unit Tests
 
-on:
-  workflow_dispatch:
+"on":
+  workflow_dispatch: {}
   push:
     branches: ["main"]
   pull_request:
@@ -60,7 +60,6 @@ jobs:
         run: |
           set -e
 
-          # Secrets.plist (required by the app at build time)
           if [ ! -f "Secrets.plist" ]; then
             if [ -f "Secrets.example.plist" ]; then
               cp "Secrets.example.plist" "Secrets.plist"
@@ -76,7 +75,6 @@ EOF
             fi
           fi
 
-          # GoogleService-Info.plist (Firebase) - CI stub only, never commit the real one
           if [ ! -f "GoogleService-Info.plist" ]; then
             cat > "GoogleService-Info.plist" <<'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
